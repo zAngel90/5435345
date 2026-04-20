@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useAnimationFrame, useMotionValue } from 'fram
 import { ChevronRight, ChevronDown, ShieldCheck, Zap, Star, Gamepad2, Gift, Trophy, Unlock, Users, Clock, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import fondoHero from '../fondo.jpg';
+import { API_URL } from '../config/api';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -13,6 +14,8 @@ const fadeUp = (delay = 0) => ({
 
 export default function Home() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [faqs, setFaqs] = useState<any[]>([]);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [carouselWidth, setCarouselWidth] = useState(0);
   
@@ -39,6 +42,40 @@ export default function Home() {
   });
 
   useEffect(() => {
+    // Fetch FAQs and Testimonials
+    fetch(`${API_URL}/faqs`).then(res => res.json()).then(data => {
+      if (data && data.length > 0) setFaqs(data);
+      else setFaqs([
+        {
+          q: "¿Cuánto tarda en llegar mi recarga o juego?",
+          a: "Nuestra entrega es automatizada. En cuanto tu pago sea aprobado, recibirás tu código o confirmación de recarga de forma instantánea tanto en la plataforma como por correo electrónico."
+        },
+        {
+          q: "¿Qué métodos de pago puedo utilizar?",
+          a: "Aceptamos una amplia variedad de métodos seguros incluyendo tarjetas de crédito, débito, billeteras digitales y otros métodos de pago locales dependiendo de tu región."
+        },
+        {
+          q: "¿Los códigos que venden son globales?",
+          a: "Depende de cada artículo. En la descripción técnica de cada producto especificamos sin falta si se trata de un código Global o si está bloqueado a una región específica."
+        },
+        {
+          q: "¿Qué sucede si tengo un problema con mi compra?",
+          a: "¡No te preocupes! Tenemos un equipo de atención al cliente disponible 24/7 a través de WhatsApp. Envíanos tu número de orden y te solucionaremos cualquier inconveniente rápidamente."
+        }
+      ]);
+    });
+
+    fetch(`${API_URL}/testimonials`).then(res => res.json()).then(data => {
+      if (data && data.length > 0) setTestimonials(data);
+      else setTestimonials([
+        { name: "Carlos M.", role: "Pro Player", text: "Mejoraron la velocidad de entrega de forma increíble. Compré mis V-Bucks y en 10 segundos ya los tenía en mi cuenta." },
+        { name: "Laura G.", role: "Streamer", text: "Siempre uso MonedasJuegos para comprar tarjetas de PlayStation y sortearlas. Es la plataforma más confiable del mercado actual." },
+        { name: "Andrés F.", role: "Casual Gamer", text: "La interfaz es hermosa y el soporte en WhatsApp me ayudó al instante cuando tuve una duda con mi primera compra. 10/10." },
+        { name: "Miguel T.", role: "Esports Coach", text: "Compramos keys para todo el equipo acá. Nunca tuvimos un solo problema. La pasarela de pagos es un absoluto éxito." },
+        { name: "Sofía R.", role: "Creadora de Contenido", text: "Poder conseguir Roblox Gift Cards sin tanto rollo es genial. Mis seguidores también compran directo aquí con total confianza." },
+      ]);
+    });
+
     const updateWidth = () => {
       if (carouselRef.current) {
         setCarouselWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
@@ -232,24 +269,7 @@ export default function Home() {
         </div>
 
         <div className="space-y-4">
-          {[
-            {
-              q: "¿Cuánto tarda en llegar mi recarga o juego?",
-              a: "Nuestra entrega es automatizada. En cuanto tu pago sea aprobado, recibirás tu código o confirmación de recarga de forma instantánea tanto en la plataforma como por correo electrónico."
-            },
-            {
-              q: "¿Qué métodos de pago puedo utilizar?",
-              a: "Aceptamos una amplia variedad de métodos seguros incluyendo tarjetas de crédito, débito, billeteras digitales y otros métodos de pago locales dependiendo de tu región."
-            },
-            {
-              q: "¿Los códigos que venden son globales?",
-              a: "Depende de cada artículo. En la descripción técnica de cada producto especificamos sin falta si se trata de un código Global o si está bloqueado a una región específica."
-            },
-            {
-              q: "¿Qué sucede si tengo un problema con mi compra?",
-              a: "¡No te preocupes! Tenemos un equipo de atención al cliente disponible 24/7 a través de WhatsApp. Envíanos tu número de orden y te solucionaremos cualquier inconveniente rápidamente."
-            }
-          ].map((faq, i) => (
+          {faqs.map((faq, i) => (
             <motion.div key={i} {...fadeUp(i * 0.1)} className={`bg-white dark:bg-gray-800/50 rounded-2xl border ${openFaqIndex === i ? 'border-gold-500/50 shadow-md' : 'border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md'} transition-all overflow-hidden`}>
               <button 
                 onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
@@ -308,13 +328,7 @@ export default function Home() {
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
           >
-            {[
-              { name: "Carlos M.", role: "Pro Player", text: "Mejoraron la velocidad de entrega de forma increíble. Compré mis V-Bucks y en 10 segundos ya los tenía en mi cuenta." },
-              { name: "Laura G.", role: "Streamer", text: "Siempre uso MonedasJuegos para comprar tarjetas de PlayStation y sortearlas. Es la plataforma más confiable del mercado actual." },
-              { name: "Andrés F.", role: "Casual Gamer", text: "La interfaz es hermosa y el soporte en WhatsApp me ayudó al instante cuando tuve una duda con mi primera compra. 10/10." },
-              { name: "Miguel T.", role: "Esports Coach", text: "Compramos keys para todo el equipo acá. Nunca tuvimos un solo problema. La pasarela de pagos es un absoluto éxito." },
-              { name: "Sofía R.", role: "Creadora de Contenido", text: "Poder conseguir Roblox Gift Cards sin tanto rollo es genial. Mis seguidores también compran directo aquí con total confianza." },
-            ].map((review, i) => (
+            {testimonials.map((review, i) => (
               <motion.div 
                 key={i} 
                 className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-glass dark:shadow-glass-dark border border-gray-100 dark:border-gray-700 w-[280px] sm:w-[400px] shrink-0 transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl select-none"

@@ -37,6 +37,8 @@ const initDB = () => {
         { id: 'cur-3', name: 'EUR', symbol: '€', rateToDolar: 0.92 }
       ],
       users: [],
+      faqs: [],
+      testimonials: [],
       settings: { vbucksRateInUsd: 0.25 }
     }, null, 2));
   } else {
@@ -49,6 +51,14 @@ const initDB = () => {
     }
     if (!db.settings) {
       db.settings = { vbucksRateInUsd: 0.25 };
+      updated = true;
+    }
+    if (!db.faqs) {
+      db.faqs = [];
+      updated = true;
+    }
+    if (!db.testimonials) {
+      db.testimonials = [];
       updated = true;
     }
     if(updated) {
@@ -119,6 +129,8 @@ app.post('/api/user/login', (req, res) => {
 app.get('/api/categories', (req, res) => res.json(readDB().categories));
 app.get('/api/products', (req, res) => res.json(readDB().products));
 app.get('/api/currencies', (req, res) => res.json(readDB().currencies));
+app.get('/api/faqs', (req, res) => res.json(readDB().faqs || []));
+app.get('/api/testimonials', (req, res) => res.json(readDB().testimonials || []));
 app.get('/api/settings', (req, res) => res.json(readDB().settings || { vbucksRateInUsd: 0.25 }));
 
 // ---------------
@@ -207,6 +219,52 @@ app.put('/api/settings', verifyToken, (req, res) => {
   db.settings = { ...(db.settings || {}), ...req.body };
   writeDB(db);
   res.json(db.settings);
+});
+
+// FAQs
+app.post('/api/faqs', verifyToken, (req, res) => {
+  const db = readDB();
+  const newItem = { id: `faq-${Date.now()}`, ...req.body };
+  db.faqs.push(newItem);
+  writeDB(db);
+  res.json(newItem);
+});
+app.put('/api/faqs/:id', verifyToken, (req, res) => {
+  const db = readDB();
+  const index = db.faqs.findIndex(i => i.id === req.params.id);
+  if (index === -1) return res.status(404).json({ error: 'No encontrado' });
+  db.faqs[index] = { ...db.faqs[index], ...req.body };
+  writeDB(db);
+  res.json(db.faqs[index]);
+});
+app.delete('/api/faqs/:id', verifyToken, (req, res) => {
+  const db = readDB();
+  db.faqs = db.faqs.filter(i => i.id !== req.params.id);
+  writeDB(db);
+  res.json({ success: true });
+});
+
+// Testimonials
+app.post('/api/testimonials', verifyToken, (req, res) => {
+  const db = readDB();
+  const newItem = { id: `test-${Date.now()}`, ...req.body };
+  db.testimonials.push(newItem);
+  writeDB(db);
+  res.json(newItem);
+});
+app.put('/api/testimonials/:id', verifyToken, (req, res) => {
+  const db = readDB();
+  const index = db.testimonials.findIndex(i => i.id === req.params.id);
+  if (index === -1) return res.status(404).json({ error: 'No encontrado' });
+  db.testimonials[index] = { ...db.testimonials[index], ...req.body };
+  writeDB(db);
+  res.json(db.testimonials[index]);
+});
+app.delete('/api/testimonials/:id', verifyToken, (req, res) => {
+  const db = readDB();
+  db.testimonials = db.testimonials.filter(i => i.id !== req.params.id);
+  writeDB(db);
+  res.json({ success: true });
 });
 
 app.listen(PORT, () => {

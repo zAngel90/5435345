@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, Plus, Trash2, Edit, Save, X, LogOut, Settings, DollarSign, Package, LayoutGrid } from 'lucide-react';
+import { Lock, Plus, Trash2, Edit, Save, X, LogOut, Settings, DollarSign, Package, LayoutGrid, HelpCircle, MessageSquare } from 'lucide-react';
 import { API_URL } from '../config/api';
 
 export default function Admin() {
@@ -10,7 +10,7 @@ export default function Admin() {
   const [error, setError] = useState('');
   
   const [activeTab, setActiveTab] = useState('products');
-  const [data, setData] = useState<any>({ categories: [], products: [], currencies: [], settings: { vbucksRateInUsd: 0.25 } });
+  const [data, setData] = useState<any>({ categories: [], products: [], currencies: [], faqs: [], testimonials: [], settings: { vbucksRateInUsd: 0.25 } });
   const [imageFile, setImageFile] = useState<File | null>(null);
   
   // Modales
@@ -25,17 +25,21 @@ export default function Admin() {
 
   const fetchData = async () => {
     try {
-      const [catRes, prodRes, curRes, setRes] = await Promise.all([
+      const [catRes, prodRes, curRes, setRes, faqRes, testRes] = await Promise.all([
         fetch(`${API_URL}/categories`),
         fetch(`${API_URL}/products`),
         fetch(`${API_URL}/currencies`),
-        fetch(`${API_URL}/settings`)
+        fetch(`${API_URL}/settings`),
+        fetch(`${API_URL}/faqs`),
+        fetch(`${API_URL}/testimonials`)
       ]);
       setData({
         categories: await catRes.json(),
         products: await prodRes.json(),
         currencies: await curRes.json(),
-        settings: await setRes.json()
+        settings: await setRes.json(),
+        faqs: await faqRes.json(),
+        testimonials: await testRes.json()
       });
     } catch (err) {
       console.error('Error fetching data', err);
@@ -226,6 +230,41 @@ export default function Admin() {
           </tbody>
         </table>
       );
+        </table>
+      );
+      case 'faqs': return (
+        <table className="w-full text-left">
+          <thead><tr className="border-b dark:border-gray-800 text-gray-500 text-sm uppercase"><th className="pb-3">Pregunta</th><th className="pb-3 text-right">Acciones</th></tr></thead>
+          <tbody>
+            {data.faqs.map((f: any) => (
+              <tr key={f.id} className="border-b dark:border-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <td className="py-4 font-bold dark:text-white max-w-xs truncate">{f.q}</td>
+                <td className="py-4 text-right">
+                  <button onClick={() => { setCurrentItem(f); setIsEditing(true); }} className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg"><Edit className="w-4 h-4"/></button>
+                  <button onClick={() => handleDelete('faqs', f.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
+      case 'testimonials': return (
+        <table className="w-full text-left">
+          <thead><tr className="border-b dark:border-gray-800 text-gray-500 text-sm uppercase"><th className="pb-3">Usuario</th><th className="pb-3">Texto</th><th className="pb-3 text-right">Acciones</th></tr></thead>
+          <tbody>
+            {data.testimonials.map((t: any) => (
+              <tr key={t.id} className="border-b dark:border-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <td className="py-4 font-bold dark:text-white">{t.name}</td>
+                <td className="py-4 text-xs dark:text-gray-400 max-w-sm truncate">{t.text}</td>
+                <td className="py-4 text-right">
+                  <button onClick={() => { setCurrentItem(t); setIsEditing(true); }} className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg"><Edit className="w-4 h-4"/></button>
+                  <button onClick={() => handleDelete('testimonials', t.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
       default: return (
         <table className="w-full text-left">
           <thead><tr className="border-b dark:border-gray-800 text-gray-500 text-sm uppercase"><th className="pb-3">Producto</th><th className="pb-3">Categoría</th><th className="pb-3">Precio</th><th className="pb-3 text-right">Acciones</th></tr></thead>
@@ -268,6 +307,8 @@ export default function Admin() {
               { id: 'products', name: 'Productos', icon: Package },
               { id: 'categories', name: 'Categorías', icon: LayoutGrid },
               { id: 'currencies', name: 'Divisas', icon: DollarSign },
+              { id: 'faqs', name: 'FAQ', icon: HelpCircle },
+              { id: 'testimonials', name: 'Testimonios', icon: MessageSquare },
               { id: 'settings', name: 'Configuración', icon: Settings }
             ].map(tab => (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex items-center gap-3 p-3 rounded-xl font-bold transition-all ${
@@ -340,6 +381,23 @@ export default function Admin() {
                     {currentItem.image && <p className="text-xs text-gray-400 mt-1">Actual: {currentItem.image.split('/').pop()}</p>}
                   </div>
                   <div><label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Badge / Tag (Opcional)</label><input type="text" value={currentItem.tag || ''} onChange={e => setCurrentItem({...currentItem, tag: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500" placeholder="Ej: Oferta, Nuevo..." /></div>
+                </>
+              )}
+
+              {/* FAQ Fields */}
+              {activeTab === 'faqs' && (
+                <>
+                  <div><label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Pregunta</label><input type="text" value={currentItem.q || ''} onChange={e => setCurrentItem({...currentItem, q: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500" required /></div>
+                  <div><label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Respuesta</label><textarea value={currentItem.a || ''} onChange={e => setCurrentItem({...currentItem, a: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500 h-32" required /></div>
+                </>
+              )}
+
+              {/* Testimonials Fields */}
+              {activeTab === 'testimonials' && (
+                <>
+                  <div><label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Nombre Usuario</label><input type="text" value={currentItem.name || ''} onChange={e => setCurrentItem({...currentItem, name: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500" required /></div>
+                  <div><label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Rol / Badge</label><input type="text" value={currentItem.role || ''} onChange={e => setCurrentItem({...currentItem, role: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500" placeholder="Ej: Pro Player, Streamer..." required /></div>
+                  <div><label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Testimonio</label><textarea value={currentItem.text || ''} onChange={e => setCurrentItem({...currentItem, text: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500 h-32" required /></div>
                 </>
               )}
 
