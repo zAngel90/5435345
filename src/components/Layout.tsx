@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="w-10 h-10 sm:w-14 sm:h-14 rounded-full object-cover shadow-sm ring-2 ring-white/50 dark:ring-gray-800/80 group-hover:scale-105 transition-all duration-300"
             />
             <span className="font-black text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
-              MONEDAS<span className="text-gold-500">JUEGOS</span>
+              MONEDAS<span className="text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]">JUEGOS</span>
             </span>
           </Link>
           
@@ -74,7 +74,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 hover:border-gold-500/50 transition-all"
                   >
-                    <span className="text-gold-500 font-bold">{selectedCurrency?.symbol || '$'}</span>
+                    <DollarSign className="w-3.5 h-3.5 text-gold-500 stroke-[3]" />
                     <span className="text-gray-400 font-bold">{selectedCurrency?.name || 'USD'}</span>
                     <ChevronDown className="w-3 h-3 text-gray-400" />
                   </button>
@@ -103,10 +103,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </AnimatePresence>
                 </div>
               )}
-
-              <button className="w-9 h-9 sm:w-10 sm:h-10 hidden sm:flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all">
-                <Search className="w-5 h-5" />
-              </button>
               
               <a 
                 href="https://www.instagram.com/monedasjuegos/" 
