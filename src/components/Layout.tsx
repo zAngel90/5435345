@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, User, Zap, Search, ChevronDown, DollarSign, Menu, X } from 'lucide-react';
+import { ShoppingCart, Instagram, Zap, Search, ChevronDown, DollarSign, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useCurrency } from '../context/CurrencyContext';
 import CartDrawer from './CartDrawer';
 import WhatsAppButton from './WhatsAppButton';
-import AuthDrawer from './AuthDrawer';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -15,12 +14,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
 
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-gray-950 font-sans text-gray-800 dark:text-gray-200 selection:bg-gold-300 selection:text-gray-900 overflow-clip flex flex-col transition-colors duration-300">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-gray-950 font-sans text-gray-800 dark:text-gray-200 selection:bg-gold-300 selection:text-gray-900 flex flex-col transition-colors duration-300">
       {/* Background Mesh */}
       <div className="fixed inset-0 bg-light-mesh dark:bg-dark-mesh -z-10 opacity-70 pointer-events-none transition-colors duration-300"></div>
       
@@ -31,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="fixed w-full z-50 top-6 px-4 sm:px-6 lg:px-8 flex justify-center"
       >
-        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white dark:border-gray-800 shadow-glass dark:shadow-glass-dark rounded-3xl px-6 py-3 flex items-center justify-between w-full max-w-5xl transition-colors duration-300">
+        <div className="bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl border border-white/50 dark:border-gray-800/50 shadow-glass dark:shadow-glass-dark rounded-full px-8 py-3 flex items-center w-full max-w-6xl transition-colors duration-300">
           <Link to="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 cursor-pointer group">
             {/* Nuevo Logo */}
             <img 
@@ -44,93 +42,100 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
           
-          <div className="hidden md:flex items-center bg-gray-50/80 dark:bg-gray-800/80 rounded-3xl px-2 py-1 border border-gray-100 dark:border-gray-700">
-            <Link 
-              to="/" 
-              className={`px-5 py-2 rounded-3xl text-sm font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'bg-white dark:bg-gray-700 shadow-sm text-gold-600 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:shadow-sm'}`}
-            >
-              Inicio
-            </Link>
-            <Link 
-              to="/catalogo" 
-              className={`px-5 py-2 rounded-3xl text-sm font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'bg-white dark:bg-gray-700 shadow-sm text-gold-600 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:shadow-sm'}`}
-            >
-              Catálogo
-            </Link>
-            <Link 
-              to="/tienda-diaria" 
-              className={`px-5 py-2 rounded-3xl text-sm font-black uppercase tracking-wider transition-all flex items-center gap-1 ${location.pathname === '/tienda-diaria' ? 'bg-white dark:bg-gray-700 shadow-sm text-gold-600 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:shadow-sm'}`}
-            >
-              <Zap className="w-4 h-4 text-gold-500" /> Tienda
-            </Link>
-          </div>
+          <div className="flex items-center ml-auto gap-4 sm:gap-6 lg:gap-8">
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center gap-8 lg:gap-10 mr-4 lg:mr-8">
+              <Link 
+                to="/" 
+                className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+              >
+                Inicio
+              </Link>
+              <Link 
+                to="/catalogo" 
+                className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+              >
+                Catálogo
+              </Link>
+              <Link 
+                to="/tienda-diaria" 
+                className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+              >
+                TIENDA FN
+              </Link>
+            </div>
 
-          <div className="flex items-center gap-2">
-            
-            {/* Currency Selector */}
-            {currencies.length > 0 && (
-              <div className="relative">
-                <button 
-                  onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-3xl text-sm font-black uppercase tracking-wider text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm border border-transparent dark:border-gray-700 transition-all"
-                >
-                  <DollarSign className="w-4 h-4 text-gold-500" />
-                  {selectedCurrency?.name || 'USD'}
-                  <ChevronDown className="w-3 h-3 text-gray-400" />
-                </button>
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Currency Selector */}
+              {currencies.length > 0 && (
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 hover:border-gold-500/50 transition-all"
+                  >
+                    <span className="text-gold-500 font-bold">{selectedCurrency?.name || 'USD'}</span>
+                    <span className="text-gray-400 font-bold">{selectedCurrency?.name || 'USD'}</span>
+                    <ChevronDown className="w-3 h-3 text-gray-400" />
+                  </button>
 
-                <AnimatePresence>
-                  {isCurrencyOpen && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute top-12 right-0 w-32 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl shadow-xl overflow-hidden py-2"
-                    >
-                      {currencies.map(c => (
-                        <button 
-                          key={c.id} 
-                          onClick={() => { setSelectedCurrencyByName(c.name); setIsCurrencyOpen(false); }}
-                          className={`w-full text-left px-4 py-2 text-sm font-black tracking-wider transition-all ${
-                            selectedCurrency?.name === c.name ? 'bg-gold-50 text-gold-600 dark:bg-gray-800 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-                          }`}
-                        >
-                          {c.name} <span className="text-gray-400 font-bold ml-1 tracking-normal">({c.symbol})</span>
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
-
-
-            <button className="w-10 h-10 hidden sm:flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all">
-              <Search className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={() => setIsAuthOpen(true)}
-              className="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all"
-            >
-              <User className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={() => setIsCartOpen(true)}
-              className="w-10 h-10 flex items-center justify-center bg-gold-gradient text-gray-900 shadow-gold-sm rounded-3xl hover:scale-105 transition-all relative"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
-                  {itemCount}
-                </span>
+                  <AnimatePresence>
+                    {isCurrencyOpen && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute top-12 right-0 w-32 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl shadow-xl overflow-hidden py-2 z-50"
+                      >
+                        {currencies.map(c => (
+                          <button 
+                            key={c.id} 
+                            onClick={() => { setSelectedCurrencyByName(c.name); setIsCurrencyOpen(false); }}
+                            className={`w-full text-left px-4 py-2 text-sm font-black tracking-wider transition-all ${
+                              selectedCurrency?.name === c.name ? 'bg-gold-50 text-gold-600 dark:bg-gray-800 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                            }`}
+                          >
+                            {c.name} <span className="text-gray-400 font-bold ml-1 tracking-normal">({c.symbol})</span>
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               )}
-            </button>
-            <button 
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl transition-all"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
+
+              <button className="w-9 h-9 sm:w-10 sm:h-10 hidden sm:flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all">
+                <Search className="w-5 h-5" />
+              </button>
+              
+              <a 
+                href="https://www.instagram.com/monedasjuegos/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+
+              <button 
+                onClick={() => setIsCartOpen(true)}
+                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-gold-gradient text-gray-900 shadow-gold-sm rounded-3xl hover:scale-105 transition-all relative"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
+
+              <button 
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="md:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl transition-all"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -164,7 +169,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 Catálogo
               </Link>
               <Link to="/tienda-diaria" onClick={() => setIsMobileMenuOpen(false)} className={`text-xl font-black uppercase tracking-wider p-4 rounded-3xl transition-colors flex items-center gap-2 ${location.pathname === '/tienda-diaria' ? 'bg-gold-500/10 text-gold-500' : 'text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900'}`}>
-                <Zap className="w-5 h-5 text-gold-500" /> Tienda Diaria
+                TIENDA FN
               </Link>
             </div>
           </motion.div>
@@ -228,7 +233,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </footer>
 
       <CartDrawer />
-      <AuthDrawer isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
       <WhatsAppButton />
     </div>
   );
