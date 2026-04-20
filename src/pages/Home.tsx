@@ -58,7 +58,7 @@ export default function Home() {
     <div className="flex flex-col w-full overflow-hidden -mt-24">
 
       {/* ── 1. PREMIUM HERO SECTION (SPLIT LAYOUT) ───────────────────────────── */}
-      <section className="relative z-0 min-h-[85vh] sm:min-h-[100vh] flex items-center justify-center px-4 pt-44 pb-20 overflow-hidden">
+      <section className="relative z-0 min-h-[70vh] sm:min-h-[100vh] flex items-center justify-center px-4 pt-32 sm:pt-44 pb-12 sm:pb-20 overflow-hidden">
         
         {/* Specific Background Image for Hero only */}
         <div className="absolute inset-0 -z-20 pointer-events-none">
@@ -96,17 +96,17 @@ export default function Home() {
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl lg:text-[4.5rem] font-black tracking-tight text-gray-900 dark:text-white leading-[1.05] mb-6"
+              className="text-4xl sm:text-6xl lg:text-[4.5rem] font-black tracking-tight text-gray-900 dark:text-white leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6"
             >
               TU ARSENAL <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-600 to-gold-400 dark:from-gold-400 dark:to-gold-200 mt-2 block">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-600 to-gold-400 dark:from-gold-400 dark:to-gold-200 mt-1 sm:mt-2 block">
                 LLEVADO AL LÍMITE
               </span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 font-medium mb-10 max-w-lg leading-relaxed"
+              className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 font-medium mb-8 sm:mb-10 max-w-lg leading-relaxed"
             >
               Recargas instantáneas, llaves globales y pases premium. Potencia tu experiencia de juego sin interrupciones.
             </motion.p>
@@ -135,7 +135,7 @@ export default function Home() {
       </section>
 
       {/* ── 2. STATS BANNER ───────────────────────────────────── */}
-      <section className="w-full bg-white dark:bg-gray-900/50 border-y border-gray-100 dark:border-gray-800 py-12 relative z-20">
+      <section className="w-full bg-white dark:bg-gray-900/50 border-y border-gray-100 dark:border-gray-800 py-8 sm:py-12 relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-transparent md:divide-gray-200 md:dark:divide-gray-800 text-center">
             {[
@@ -169,52 +169,52 @@ export default function Home() {
         />
 
       {/* ── 3. FEATURES (CLEAN GRID) ──────────────────────────────── */}
-      <section id="bento-features" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-b border-gray-100/50 dark:border-gray-800/50 relative z-10">
-        <motion.div {...fadeUp(0)} className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <section id="bento-features" className="py-8 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-b border-gray-100/50 dark:border-gray-800/50 relative z-10">
+        <motion.div {...fadeUp(0)} className="mb-8 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
           <div>
-            <h2 className="text-sm font-bold text-gold-500 uppercase tracking-widest mb-2">Por qué elegirnos</h2>
-            <h3 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white">
+            <h2 className="text-xs font-bold text-gold-500 uppercase tracking-widest mb-1 sm:mb-2">Por qué elegirnos</h2>
+            <h3 className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white">
               Diseñado para el <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">rendimiento</span>
             </h3>
           </div>
-          <p className="text-gray-500 dark:text-gray-400 md:max-w-sm text-sm font-medium">
+          <p className="text-gray-500 dark:text-gray-400 md:max-w-sm text-xs sm:text-sm font-medium">
             Beneficios diseñados a medida para garantizar que tu única preocupación sea jugar.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <motion.div {...fadeUp(0.1)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-gold-500/30 transition-colors shadow-sm hover:shadow-md group">
-            <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6 text-gold-500" />
+          <motion.div {...fadeUp(0.1)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-gold-500/30 transition-colors shadow-sm hover:shadow-md group">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-gold-500" />
             </div>
-            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Velocidad Relámpago</h4>
-            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Nuestro sistema automatizado entrega códigos en milisegundos tras tu pago.</p>
+            <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Velocidad Relámpago</h4>
+            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">Nuestro sistema automatizado entrega códigos en milisegundos tras tu pago.</p>
           </motion.div>
 
-          <motion.div {...fadeUp(0.2)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-indigo-500/30 transition-colors shadow-sm hover:shadow-md group">
-            <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
-              <ShieldCheck className="w-6 h-6 text-indigo-500" />
+          <motion.div {...fadeUp(0.2)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-indigo-500/30 transition-colors shadow-sm hover:shadow-md group">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />
             </div>
-            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Pago Seguro</h4>
-            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Cifrado de grado militar para proteger tus transacciones al 100%.</p>
+            <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Pago Seguro</h4>
+            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">Cifrado de grado militar para proteger tus transacciones al 100%.</p>
           </motion.div>
 
-          <motion.div {...fadeUp(0.3)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-purple-500/30 transition-colors shadow-sm hover:shadow-md group lg:col-span-2 relative overflow-hidden flex flex-col justify-center">
+          <motion.div {...fadeUp(0.3)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-purple-500/30 transition-colors shadow-sm hover:shadow-md lg:col-span-2 relative overflow-hidden flex flex-col justify-center">
             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-               <Trophy className="w-48 h-48 text-purple-500" />
+               <Trophy className="w-32 h-32 sm:w-48 sm:h-48 text-purple-500" />
             </div>
             <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
                <div className="flex-1">
-                 <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform bg-purple-50 dark:bg-purple-900/20">
-                   <Trophy className="w-6 h-6 text-purple-500" />
+                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform bg-purple-50 dark:bg-purple-900/20">
+                   <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
                  </div>
-                 <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Ofertas Imbatibles</h4>
-                 <p className="text-gray-500 dark:text-gray-400 text-sm max-w-sm leading-relaxed">Conectamos directo con distribuidores oficiales para ahorrarte en promedio un 35% en tus juegos.</p>
+                 <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Ofertas Imbatibles</h4>
+                 <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm max-w-sm leading-relaxed">Conectamos directo con distribuidores oficiales para ahorrarte en promedio un 35% en tus juegos.</p>
                </div>
-               <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl px-5 py-4 shadow-inner border border-gray-100 dark:border-gray-700 flex items-center gap-4 shrink-0 shadow-purple-500/5 dark:shadow-purple-500/10">
-                 <div className="bg-white dark:bg-gray-900 rounded-full p-2 shadow-sm"><TrendingUp className="w-5 h-5 text-green-500" /></div>
-                 <div><p className="text-xs font-bold text-gray-500">Ahorro Medio</p><p className="text-lg font-black text-gray-900 dark:text-white tracking-tight">-35% DESC</p></div>
+               <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl px-4 py-3 sm:px-5 sm:py-4 shadow-inner border border-gray-100 dark:border-gray-700 flex items-center gap-3 sm:gap-4 shrink-0 shadow-purple-500/5 dark:shadow-purple-500/10">
+                 <div className="bg-white dark:bg-gray-900 rounded-full p-1.5 sm:p-2 shadow-sm"><TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" /></div>
+                 <div><p className="text-[10px] sm:text-xs font-bold text-gray-500">Ahorro Medio</p><p className="text-base sm:text-lg font-black text-gray-900 dark:text-white tracking-tight">-35% DESC</p></div>
                </div>
             </div>
           </motion.div>
@@ -223,11 +223,11 @@ export default function Home() {
       </section>
 
       {/* ── 4. PREGUNTAS FRECUENTES ────────────────────────── */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
-        <div className="text-center mb-16">
+      <section className="py-10 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
+        <div className="text-center mb-8 sm:mb-16">
           <motion.div {...fadeUp(0)}>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">Preguntas Frecuentes</h2>
-            <p className="text-lg text-gray-500 dark:text-gray-400 font-medium">Resolvemos tus dudas al instante.</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2 sm:mb-4">Preguntas Frecuentes</h2>
+            <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 font-medium">Resolvemos tus dudas al instante.</p>
           </motion.div>
         </div>
 
@@ -253,15 +253,15 @@ export default function Home() {
             <motion.div key={i} {...fadeUp(i * 0.1)} className={`bg-white dark:bg-gray-800/50 rounded-2xl border ${openFaqIndex === i ? 'border-gold-500/50 shadow-md' : 'border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md'} transition-all overflow-hidden`}>
               <button 
                 onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
-                className="w-full text-left p-6 sm:p-8 flex items-center justify-between gap-4 outline-none"
+                className="w-full text-left p-5 sm:p-8 flex items-center justify-between gap-4 outline-none"
               >
-                <div className="flex items-center gap-4">
-                  <span className={`shrink-0 flex items-center justify-center w-8 h-8 rounded-full text-sm font-black transition-colors ${openFaqIndex === i ? 'bg-gold-500 text-gray-900' : 'bg-gold-100 dark:bg-gold-500/20 text-gold-600 dark:text-gold-400'}`}>Q.</span> 
-                  <h4 className={`text-lg sm:text-xl font-black transition-colors ${openFaqIndex === i ? 'text-gold-600 dark:text-gold-400' : 'text-gray-900 dark:text-white'}`}>
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <span className={`shrink-0 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-black transition-colors ${openFaqIndex === i ? 'bg-gold-500 text-gray-900' : 'bg-gold-100 dark:bg-gold-500/20 text-gold-600 dark:text-gold-400'}`}>Q.</span> 
+                  <h4 className={`text-base sm:text-xl font-black transition-colors ${openFaqIndex === i ? 'text-gold-600 dark:text-gold-400' : 'text-gray-900 dark:text-white'}`}>
                     {faq.q}
                   </h4>
                 </div>
-                <ChevronDown className={`shrink-0 w-5 h-5 text-gray-400 transition-transform duration-300 ${openFaqIndex === i ? 'rotate-180 text-gold-500' : ''}`} />
+                <ChevronDown className={`shrink-0 w-4 h-4 sm:w-5 sm:h-5 text-gray-400 transition-transform duration-300 ${openFaqIndex === i ? 'rotate-180 text-gold-500' : ''}`} />
               </button>
               <AnimatePresence>
                 {openFaqIndex === i && (
@@ -271,8 +271,8 @@ export default function Home() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0">
-                      <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed pl-12">{faq.a}</p>
+                    <div className="px-5 sm:px-8 pb-5 sm:pb-8 pt-0">
+                      <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-base leading-relaxed pl-10 sm:pl-12">{faq.a}</p>
                     </div>
                   </motion.div>
                 )}
@@ -283,12 +283,12 @@ export default function Home() {
       </section>
 
       {/* ── 5. TESTIMONIALS (CAROUSEL) ──────────────────────────────────── */}
-      <section className="py-24 bg-gray-50/50 dark:bg-gray-900/30 backdrop-blur-sm border-y border-gray-100/50 dark:border-gray-800/50 flex flex-col items-center relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-16">
+      <section className="py-10 sm:py-24 bg-gray-50/50 dark:bg-gray-900/30 backdrop-blur-sm border-y border-gray-100/50 dark:border-gray-800/50 flex flex-col items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-8 sm:mb-16">
           <motion.div {...fadeUp(0)} className="text-center">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">Lo que dice nuestra comunidad</h2>
-            <div className="flex justify-center items-center gap-1 text-gold-500">
-              {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-current" />)}
+            <h2 className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2 sm:mb-4">Lo que dice nuestra comunidad</h2>
+            <div className="flex justify-center items-center gap-0.5 text-gold-500">
+              {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />)}
             </div>
           </motion.div>
         </div>
@@ -317,19 +317,19 @@ export default function Home() {
             ].map((review, i) => (
               <motion.div 
                 key={i} 
-                className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-glass dark:shadow-glass-dark border border-gray-100 dark:border-gray-700 w-[350px] sm:w-[400px] shrink-0 transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl select-none"
+                className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-glass dark:shadow-glass-dark border border-gray-100 dark:border-gray-700 w-[280px] sm:w-[400px] shrink-0 transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl select-none"
               >
-                <div className="flex gap-1 text-gold-500 mb-4">
-                  {[...Array(5)].map((_, idx) => <Star key={idx} className="w-4 h-4 fill-current pointer-events-none" />)}
+                <div className="flex gap-0.5 text-gold-500 mb-3 sm:mb-4">
+                  {[...Array(5)].map((_, idx) => <Star key={idx} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current pointer-events-none" />)}
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6 italic text-sm sm:text-base leading-relaxed line-clamp-3 pointer-events-none">"{review.text}"</p>
-                <div className="flex items-center gap-4 pointer-events-none">
-                  <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-inner">
+                <p className="text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 italic text-xs sm:text-base leading-relaxed line-clamp-3 pointer-events-none">"{review.text}"</p>
+                <div className="flex items-center gap-3 sm:gap-4 pointer-events-none">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-inner">
                     {review.name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 dark:text-white">{review.name}</h4>
-                    <p className="text-sm text-gray-500 font-medium">{review.role}</p>
+                    <h4 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white">{review.name}</h4>
+                    <p className="text-[10px] sm:text-sm text-gray-500 font-medium">{review.role}</p>
                   </div>
                 </div>
               </motion.div>
@@ -343,7 +343,7 @@ export default function Home() {
       </section>
 
       {/* ── 6. BOTTOM CTA ────────────────────────────────────── */}
-      <section className="py-32 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-32 px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -357,7 +357,7 @@ export default function Home() {
              <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent dark:from-gold-600 dark:via-gold-500/90 dark:to-gold-400"></div>
           </div>
 
-          <div className="relative z-10 p-12 sm:p-20 flex flex-col md:flex-row items-center justify-between gap-10">
+          <div className="relative z-10 p-8 sm:p-20 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-xl">
               <h2 className="text-4xl sm:text-5xl font-black text-white dark:text-gray-900 mb-4 leading-tight">¿Listo para subir de nivel?</h2>
               <p className="text-xl text-gray-300 dark:text-gray-800/80 mb-8 font-medium">Únete a miles de jugadores que ya confían en nosotros para sus recargas.</p>
