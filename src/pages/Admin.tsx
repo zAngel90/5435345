@@ -230,8 +230,6 @@ export default function Admin() {
           </tbody>
         </table>
       );
-        </table>
-      );
       case 'faqs': return (
         <table className="w-full text-left">
           <thead><tr className="border-b dark:border-gray-800 text-gray-500 text-sm uppercase"><th className="pb-3">Pregunta</th><th className="pb-3 text-right">Acciones</th></tr></thead>
