@@ -40,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className="h-10 sm:h-12 w-auto rounded-full object-cover shadow-sm ring-2 ring-white/50 dark:ring-gray-800/80 group-hover:scale-105 transition-all duration-300"
                 />
                 <span className="font-black text-xl sm:text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
-                  MONEDAS<span className="text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]">JUEGOS</span>
+                  MONEDAS<span className="text-gold-400">JUEGOS</span>
                 </span>
               </Link>
           
