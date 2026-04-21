@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-4 lg:px-8 pt-2 sm:pt-4"
       >
-        <div className="max-w-7xl mx-auto bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border border-white/50 dark:border-gray-800/50 shadow-2xl dark:shadow-glass-dark rounded-xl sm:rounded-2xl transition-all duration-300">
+        <div className="max-w-7xl mx-auto bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border border-gold-500/30 shadow-2xl dark:shadow-gold-sm rounded-xl sm:rounded-2xl transition-all duration-300">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16 sm:h-20">
               <Link to="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 cursor-pointer group">
@@ -40,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className="h-10 sm:h-12 w-auto rounded-full object-cover shadow-sm ring-2 ring-white/50 dark:ring-gray-800/80 group-hover:scale-105 transition-all duration-300"
                 />
                 <span className="font-black text-xl sm:text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
-                  MONEDAS<span className="text-gold-400">JUEGOS</span>
+                  MONEDAS<span className="text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]">JUEGOS</span>
                 </span>
               </Link>
           
@@ -49,19 +49,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="hidden md:flex items-center gap-8 lg:gap-10 mr-4 lg:mr-8">
                 <Link 
                   to="/" 
-                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-gold-500 drop-shadow-[0_0_10px_rgba(196,159,45,0.5)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
                 >
                   Inicio
                 </Link>
                 <Link 
                   to="/catalogo" 
-                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-gold-500 drop-shadow-[0_0_10px_rgba(196,159,45,0.5)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
                 >
                   Catálogo
                 </Link>
                 <Link 
                   to="/tienda-diaria" 
-                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-gold-500 drop-shadow-[0_0_10px_rgba(196,159,45,0.5)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
                 >
                   TIENDA FN
                 </Link>
