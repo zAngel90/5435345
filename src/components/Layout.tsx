@@ -22,119 +22,123 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Background Mesh */}
       <div className="fixed inset-0 bg-light-mesh dark:bg-dark-mesh -z-10 opacity-70 pointer-events-none transition-colors duration-300"></div>
       
-      {/* Floating Pill Navbar */}
+      {/* Floating Navbar (Rammat Zone Style - Enhanced) */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed w-full z-50 top-6 px-4 sm:px-6 lg:px-8 flex justify-center"
+        className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-4 lg:px-8 pt-2 sm:pt-4"
       >
-        <div className="bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl border border-white/50 dark:border-gray-800/50 shadow-glass dark:shadow-glass-dark rounded-full px-8 py-3 flex items-center w-full max-w-6xl transition-colors duration-300">
-          <Link to="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 cursor-pointer group">
-            {/* Nuevo Logo */}
-            <img 
-              src="https://i.postimg.cc/gJRjBt94/68a1010c-b56a-418b-a922-e759cfa68b1b.jpg" 
-              alt="MonedasJuegos Logo" 
-              className="w-10 h-10 sm:w-14 sm:h-14 rounded-full object-cover shadow-sm ring-2 ring-white/50 dark:ring-gray-800/80 group-hover:scale-105 transition-all duration-300"
-            />
-            <span className="font-black text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
-              MONEDAS<span className="text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]">JUEGOS</span>
-            </span>
-          </Link>
+        <div className="max-w-7xl mx-auto bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border border-white/50 dark:border-gray-800/50 shadow-2xl dark:shadow-glass-dark rounded-xl sm:rounded-2xl transition-all duration-300">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 sm:h-20">
+              <Link to="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 cursor-pointer group">
+                {/* Logo más grande */}
+                <img 
+                  src="https://i.postimg.cc/gJRjBt94/68a1010c-b56a-418b-a922-e759cfa68b1b.jpg" 
+                  alt="MonedasJuegos Logo" 
+                  className="h-10 sm:h-12 w-auto rounded-full object-cover shadow-sm ring-2 ring-white/50 dark:ring-gray-800/80 group-hover:scale-105 transition-all duration-300"
+                />
+                <span className="font-black text-xl sm:text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
+                  MONEDAS<span className="text-gold-400">JUEGOS</span>
+                </span>
+              </Link>
           
-          <div className="flex items-center ml-auto gap-4 sm:gap-6 lg:gap-8">
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-8 lg:gap-10 mr-4 lg:mr-8">
-              <Link 
-                to="/" 
-                className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
-              >
-                Inicio
-              </Link>
-              <Link 
-                to="/catalogo" 
-                className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
-              >
-                Catálogo
-              </Link>
-              <Link 
-                to="/tienda-diaria" 
-                className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-[#FFEE58] drop-shadow-[0_0_8px_rgba(255,238,88,0.4)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
-              >
-                TIENDA FN
-              </Link>
-            </div>
+            <div className="flex items-center ml-auto gap-4 sm:gap-6 lg:gap-8">
+              {/* Desktop Navigation Links */}
+              <div className="hidden md:flex items-center gap-8 lg:gap-10 mr-4 lg:mr-8">
+                <Link 
+                  to="/" 
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-gold-500 drop-shadow-sm' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                >
+                  Inicio
+                </Link>
+                <Link 
+                  to="/catalogo" 
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-gold-500 drop-shadow-sm' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                >
+                  Catálogo
+                </Link>
+                <Link 
+                  to="/tienda-diaria" 
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-gold-500 drop-shadow-sm' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                >
+                  TIENDA FN
+                </Link>
+              </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Currency Selector */}
-              {currencies.length > 0 && (
-                <div className="relative">
-                  <button 
-                    onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 hover:border-gold-500/50 transition-all"
-                  >
-                    <DollarSign className="w-3.5 h-3.5 text-gold-500 stroke-[3]" />
-                    <span className="text-gray-400 font-bold">{selectedCurrency?.name || 'USD'}</span>
-                    <ChevronDown className="w-3 h-3 text-gray-400" />
-                  </button>
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2 sm:gap-3">
+                {/* Currency Selector */}
+                {currencies.length > 0 && (
+                  <div className="relative">
+                    <button 
+                      onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
+                      className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 hover:border-gold-500/50 transition-all"
+                    >
+                      <DollarSign className="w-3.5 h-3.5 text-gold-500 stroke-[3]" />
+                      <span className="text-gray-400 font-bold">{selectedCurrency?.name || 'USD'}</span>
+                      <ChevronDown className="w-3 h-3 text-gray-400" />
+                    </button>
 
-                  <AnimatePresence>
-                    {isCurrencyOpen && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute top-12 right-0 w-32 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl shadow-xl overflow-hidden py-2 z-50"
-                      >
-                        {currencies.map(c => (
-                          <button 
-                            key={c.id} 
-                            onClick={() => { setSelectedCurrencyByName(c.name); setIsCurrencyOpen(false); }}
-                            className={`w-full text-left px-4 py-2 text-sm font-black tracking-wider transition-all ${
-                              selectedCurrency?.name === c.name ? 'bg-gold-50 text-gold-600 dark:bg-gray-800 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-                            }`}
-                          >
-                            {c.name} <span className="text-gray-400 font-bold ml-1 tracking-normal">({c.symbol})</span>
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              )}
-              
-              <a 
-                href="https://www.instagram.com/monedasjuegos/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-
-              <button 
-                onClick={() => setIsCartOpen(true)}
-                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-gold-gradient text-gray-900 shadow-gold-sm rounded-3xl hover:scale-105 transition-all relative"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
-                    {itemCount}
-                  </span>
+                    <AnimatePresence>
+                      {isCurrencyOpen && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className="absolute top-12 right-0 w-32 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl shadow-xl overflow-hidden py-2 z-50"
+                        >
+                          {currencies.map(c => (
+                            <button 
+                              key={c.id} 
+                              onClick={() => { setSelectedCurrencyByName(c.name); setIsCurrencyOpen(false); }}
+                              className={`w-full text-left px-4 py-2 text-sm font-black tracking-wider transition-all ${
+                                selectedCurrency?.name === c.name ? 'bg-gold-50 text-gold-600 dark:bg-gray-800 dark:text-gold-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                              }`}
+                            >
+                              {c.name} <span className="text-gray-400 font-bold ml-1 tracking-normal">({c.symbol})</span>
+                            </button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 )}
-              </button>
+                
+                <a 
+                  href="https://www.instagram.com/monedasjuegos/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
 
-              <button 
-                onClick={() => setIsMobileMenuOpen(true)}
-                className="md:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl transition-all"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
+                <button 
+                  onClick={() => setIsCartOpen(true)}
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-gold-gradient text-gray-900 shadow-gold-sm rounded-3xl hover:scale-105 transition-all relative"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black rounded-full h-4 w-4 flex items-center justify-center shadow-sm">
+                      {itemCount}
+                    </span>
+                  )}
+                </button>
+
+                <button 
+                  onClick={() => setIsMobileMenuOpen(true)}
+                  className="md:hidden w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-3xl transition-all"
+                >
+                  <Menu className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </motion.nav>
+      </div>
+    </motion.nav>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -148,7 +152,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           >
             <div className="p-6 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
               <span className="font-black text-2xl tracking-wider text-gray-800 dark:text-white uppercase">
-                MONEDAS<span className="text-gold-500">JUEGOS</span>
+                MONEDAS<span className="text-gold-400">JUEGOS</span>
               </span>
               <button 
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -188,7 +192,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   alt="MonedasJuegos Logo" 
                   className="w-12 h-12 rounded-full object-cover shadow-sm"
                 />
-                <span className="font-black text-2xl tracking-wider text-gray-800 dark:text-white uppercase">MONEDAS<span className="text-gold-500">JUEGOS</span></span>
+                <span className="font-black text-2xl tracking-wider text-gray-800 dark:text-white uppercase">MONEDAS<span className="text-gold-400">JUEGOS</span></span>
               </div>
               <p className="text-gray-500 dark:text-gray-400 font-medium max-w-sm">
                 Tu destino premium para recargas y juegos. Diseñado para gamers que exigen lo mejor, más rápido y seguro.
