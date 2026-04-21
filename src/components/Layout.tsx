@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {/* Logo Flotante (Sobresale de la Navbar) */}
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 py-4">
                     <img 
-                      src="https://i.postimg.cc/ZnYp5dzv/a8040c8f-601d-4890-9c2d-f46496c1ee71-Photoroom.png" 
+                      src="https://i.postimg.cc/SxthTFKb/Whats-App-Image-2026-04-20-at-8-31-10-PM-Photoroom-(1).png" 
                       alt="MonedasJuegos Logo" 
                       className="h-24 sm:h-32 w-auto object-contain drop-shadow-2xl group-hover:scale-110 transition-all duration-300"
                     />
