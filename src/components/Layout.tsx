@@ -31,18 +31,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       >
         <div className="max-w-7xl mx-auto bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border border-gold-500/30 shadow-2xl dark:shadow-gold-sm rounded-xl sm:rounded-2xl transition-all duration-300">
           <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16 sm:h-20">
-              <Link to="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 cursor-pointer group">
-                {/* Logo más grande */}
-                <img 
-                  src="https://i.postimg.cc/gJRjBt94/68a1010c-b56a-418b-a922-e759cfa68b1b.jpg" 
-                  alt="MonedasJuegos Logo" 
-                  className="h-10 sm:h-12 w-auto rounded-full object-cover shadow-sm ring-2 ring-white/50 dark:ring-gray-800/80 group-hover:scale-105 transition-all duration-300"
-                />
-                <span className="font-black text-xl sm:text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
-                  MONEDAS<span className="text-gold-400">JUEGOS</span>
-                </span>
-              </Link>
+            <div className="flex items-center justify-between h-16 sm:h-20 relative">
+              <div className="flex items-center gap-6 sm:gap-10">
+                <Link to="/" className="relative flex items-center flex-shrink-0 cursor-pointer group z-50">
+                  {/* Logo Flotante (Sobresale de la Navbar) */}
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 py-4">
+                    <img 
+                      src="https://i.postimg.cc/ZnYp5dzv/a8040c8f-601d-4890-9c2d-f46496c1ee71-Photoroom.png" 
+                      alt="MonedasJuegos Logo" 
+                      className="h-24 sm:h-32 w-auto object-contain drop-shadow-2xl group-hover:scale-110 transition-all duration-300"
+                    />
+                  </div>
+                  {/* Espaciador ajustado para acercar el texto */}
+                  <div className="w-16 sm:w-20"></div>
+                  <span className="font-black text-xl sm:text-2xl tracking-wider text-gray-800 dark:text-white hidden sm:block uppercase">
+                    MONEDAS<span className="text-gold-400">JUEGOS</span>
+                  </span>
+                </Link>
+              </div>
           
             <div className="flex items-center ml-auto gap-4 sm:gap-6 lg:gap-8">
               {/* Desktop Navigation Links */}
