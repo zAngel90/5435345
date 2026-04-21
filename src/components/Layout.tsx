@@ -49,19 +49,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="hidden md:flex items-center gap-8 lg:gap-10 mr-4 lg:mr-8">
                 <Link 
                   to="/" 
-                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-gold-500 drop-shadow-sm' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/' ? 'text-gold-500 drop-shadow-[0_0_10px_rgba(196,159,45,0.5)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
                 >
                   Inicio
                 </Link>
                 <Link 
                   to="/catalogo" 
-                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-gold-500 drop-shadow-sm' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all ${location.pathname === '/catalogo' ? 'text-gold-500 drop-shadow-[0_0_10px_rgba(196,159,45,0.5)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
                 >
                   Catálogo
                 </Link>
                 <Link 
                   to="/tienda-diaria" 
-                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-gold-500 drop-shadow-sm' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
+                  className={`text-sm sm:text-base font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${location.pathname === '/tienda-diaria' ? 'text-gold-500 drop-shadow-[0_0_10px_rgba(196,159,45,0.5)]' : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'}`}
                 >
                   TIENDA FN
                 </Link>
