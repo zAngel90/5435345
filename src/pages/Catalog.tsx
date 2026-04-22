@@ -172,7 +172,7 @@ export default function Catalog() {
           >
             {categories.map((cat, idx) => {
               const Icon = ICONS_MAP[cat.icon] || LayoutGrid;
-              const isActive = activeCategory === cat.name || (activeCategory === "Todos" && cat.id === "Todos");
+              const isActive = activeCategory === cat.name;
 
               return (
                 <motion.button
@@ -180,7 +180,7 @@ export default function Catalog() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={() => setActiveCategory(cat.name)}
                   className={`relative overflow-hidden group snap-center flex-shrink-0 w-[85vw] sm:w-[320px] lg:w-[380px] min-h-[160px] sm:min-h-[220px] rounded-3xl border-2 transition-all duration-500 text-left flex flex-col justify-end p-5 sm:p-6 ${
                     isActive ? 'border-gold-500 shadow-2xl shadow-gold-500/30' : 'border-transparent hover:border-white/30 hover:shadow-xl'
                   } ${!isActive && 'opacity-90 hover:opacity-100'}`}

@@ -140,7 +140,13 @@ app.get('/api/settings', (req, res) => res.json(readDB().settings || { vbucksRat
 // File Upload endpoint for both Products and Categories
 app.post('/api/upload', verifyToken, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No se envió ningún archivo' });
-  const fileUrl = `http://localhost:${PORT}/uploads/${req.file.filename}`;
+  
+  // Construir la URL dinámicamente según el host que hace la petición
+  // Esto permite que funcione tanto en localhost como en el túnel de Cloudflare
+  const protocol = req.protocol;
+  const host = req.get('host');
+  const fileUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
+  
   res.json({ url: fileUrl });
 });
 
