@@ -12,6 +12,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('products');
   const [data, setData] = useState<any>({ categories: [], products: [], currencies: [], faqs: [], testimonials: [], settings: { vbucksRateInUsd: 0.25 } });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [newOverride, setNewOverride] = useState<{ vbucks: string, prices: Record<string, string> }>({ vbucks: '', prices: {} });
   
   // Modales
   const [isEditing, setIsEditing] = useState(false);
@@ -208,57 +209,100 @@ export default function Admin() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
-              <h3 className="font-black text-lg mb-4 dark:text-white flex items-center gap-2"><Zap className="w-5 h-5 text-gold-500" /> Excepciones de Precios</h3>
-              <div className="space-y-3">
-                {Object.entries(data.settings?.vbucksOverrides || {}).map(([vbucks, price]) => (
-                  <div key={vbucks} className="flex items-center gap-4 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-xl border border-gray-100 dark:border-gray-800">
-                    <span className="font-bold text-sm text-gray-700 dark:text-gray-300 w-24">{vbucks} Pavos</span>
-                    <span className="font-black text-gold-500">$ {price as number} USD</span>
-                    <button 
-                      type="button" 
-                      onClick={() => {
-                        const newOverrides = { ...data.settings.vbucksOverrides };
-                        delete newOverrides[vbucks];
-                        setData({ ...data, settings: { ...data.settings, vbucksOverrides: newOverrides } });
-                      }}
-                      className="ml-auto text-red-500 hover:text-red-700 p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
+              <h3 className="font-black text-lg mb-4 dark:text-white flex items-center gap-2"><Zap className="w-5 h-5 text-gold-500" /> Excepciones de Precios por País</h3>
+              
+              <div className="max-h-[450px] overflow-y-auto pr-2 space-y-4 custom-scrollbar">
+                {Object.entries(data.settings?.vbucksOverrides || {}).length === 0 ? (
+                  <p className="text-center py-8 text-gray-400 text-sm italic">No hay excepciones configuradas.</p>
+                ) : (
+                  Object.entries(data.settings?.vbucksOverrides || {}).map(([vbucks, prices]: [string, any]) => (
+                    <div key={vbucks} className="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-black text-lg text-gray-900 dark:text-white">{vbucks} Pavos</span>
+                        <button 
+                          type="button" 
+                          onClick={() => {
+                            const newOverrides = { ...data.settings.vbucksOverrides };
+                            delete newOverrides[vbucks];
+                            setData({ ...data, settings: { ...data.settings, vbucksOverrides: newOverrides } });
+                          }}
+                          className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {Object.entries(prices).map(([curr, val]: [string, any]) => (
+                          <div key={curr} className="bg-white dark:bg-gray-800 p-2 rounded-xl border border-gray-100 dark:border-gray-700">
+                            <p className="text-[10px] font-black text-gray-400 uppercase">{curr}</p>
+                            <p className="text-sm font-black text-gold-500">{val}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
                 
-                <div className="flex items-center gap-2 bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800/30 mt-4">
-                  <div className="flex-1">
-                    <input id="new-vbucks" type="number" placeholder="Pavos" className="w-full bg-white dark:bg-gray-800 border-none rounded-lg py-2 px-3 text-xs font-bold" />
+              <div className="bg-indigo-50 dark:bg-indigo-900/20 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/30 mt-6">
+                <h4 className="font-black text-sm text-indigo-600 dark:text-indigo-400 mb-4 uppercase tracking-widest">Añadir Nueva Excepción</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Cantidad de Pavos</label>
+                    <input 
+                      type="number" 
+                      placeholder="Ej: 1500" 
+                      value={newOverride.vbucks}
+                      onChange={(e) => setNewOverride({...newOverride, vbucks: e.target.value})}
+                      className="w-full bg-white dark:bg-gray-800 border-none rounded-xl py-2 px-4 text-sm font-bold" 
+                    />
                   </div>
-                  <div className="flex-1">
-                    <input id="new-price" type="number" step="0.01" placeholder="Precio USD" className="w-full bg-white dark:bg-gray-800 border-none rounded-lg py-2 px-3 text-xs font-bold" />
+                  <div className="grid grid-cols-2 gap-3">
+                    {data.currencies.map((curr: any) => (
+                      <div key={curr.id}>
+                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Precio en {curr.name} ({curr.symbol})</label>
+                        <input 
+                          type="number" 
+                          step="0.01"
+                          placeholder="0.00"
+                          value={newOverride.prices[curr.name] || ''}
+                          onChange={(e) => setNewOverride({
+                            ...newOverride, 
+                            prices: { ...newOverride.prices, [curr.name]: e.target.value }
+                          })}
+                          className="w-full bg-white dark:bg-gray-800 border-none rounded-xl py-2 px-4 text-sm font-bold" 
+                        />
+                      </div>
+                    ))}
                   </div>
                   <button 
                     type="button"
                     onClick={() => {
-                      const v = (document.getElementById('new-vbucks') as HTMLInputElement).value;
-                      const p = (document.getElementById('new-price') as HTMLInputElement).value;
-                      if (v && p) {
+                      if (newOverride.vbucks && Object.keys(newOverride.prices).length > 0) {
+                        const prices: Record<string, number> = {};
+                        Object.entries(newOverride.prices).forEach(([k, v]) => {
+                          if (v) prices[k] = parseFloat(v);
+                        });
+                        
                         setData({ 
                           ...data, 
                           settings: { 
                             ...data.settings, 
-                            vbucksOverrides: { ...data.settings.vbucksOverrides, [v]: parseFloat(p) } 
+                            vbucksOverrides: { ...data.settings.vbucksOverrides, [newOverride.vbucks]: prices } 
                           } 
                         });
-                        (document.getElementById('new-vbucks') as HTMLInputElement).value = '';
-                        (document.getElementById('new-price') as HTMLInputElement).value = '';
+                        setNewOverride({ vbucks: '', prices: {} });
                       }
                     }}
-                    className="bg-indigo-600 text-white px-3 py-2 rounded-lg text-xs font-black hover:bg-indigo-700 transition-colors"
+                    className="w-full bg-indigo-600 text-white py-3 rounded-xl text-sm font-black hover:bg-indigo-700 transition-all flex items-center justify-center gap-2"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-5 h-5" /> Añadir Excepción
                   </button>
                 </div>
               </div>
-              <p className="text-[10px] text-gray-500 mt-4 leading-relaxed">Usa esto para productos específicos (ej: 1500 pavos) que quieras vender a un precio fijo independientemente de la tasa general.</p>
+              <p className="text-[10px] text-gray-500 mt-4 leading-relaxed italic">
+                * Las monedas que dejes vacías usarán el cálculo automático basado en la tasa de USD.
+              </p>
             </div>
             <button type="submit" className="mt-6 flex items-center justify-center gap-2 bg-gold-500 text-gray-900 font-black px-6 py-3 rounded-xl hover:shadow-lg w-full transition-all hover:scale-105 active:scale-95">
               <Save className="w-5 h-5"/> Guardar Configuración

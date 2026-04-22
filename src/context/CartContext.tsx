@@ -4,6 +4,7 @@ export interface Product {
   id: string | number;
   name: string;
   price: number;
+  vbucks?: number; // Optional: if it's a Fortnite item
   image?: string;
   category?: string;
 }

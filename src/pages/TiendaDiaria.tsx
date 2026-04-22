@@ -221,16 +221,17 @@ export default function TiendaDiaria() {
                           </div>
 
                           <div className="flex items-center justify-between gap-2 sm:gap-3">
-                            <div className="text-white font-black text-xs sm:text-base italic">
-                              {selectedCurrency?.symbol || '$'} {formatPrice(calculateVBucksPrice(parseFloat(String(item.price).replace(/,/g, ''))))}
-                            </div>
-                            <button 
-                              onClick={() => addToCart && addToCart({
-                                id: item.id,
-                                name: item.name,
-                                price: calculateVBucksPrice(parseFloat(String(item.price).replace(/,/g, ''))),
-                                category: 'fortnite',
-                                image: item.image
+                             <div className="text-white font-black text-xs sm:text-base italic">
+                               {selectedCurrency?.symbol || '$'} {formatOnly(calculateVBucksPrice(parseFloat(String(item.price).replace(/,/g, ''))))}
+                             </div>
+                             <button 
+                               onClick={() => addToCart && addToCart({
+                                 id: item.id,
+                                 name: item.name,
+                                 price: (parseFloat(String(item.price).replace(/,/g, '')) / 100) * 0.25,
+                                 vbucks: parseFloat(String(item.price).replace(/,/g, '')),
+                                 category: 'fortnite',
+                                 image: item.image
                               })}
                               className="bg-white text-black hover:bg-gold-500 transition-colors rounded-lg sm:rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 text-[9px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1 sm:gap-2"
                             >

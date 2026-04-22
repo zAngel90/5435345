@@ -225,7 +225,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="border-t border-gray-100 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">
+            <p className="text-gray-400 font-light text-[10px] uppercase tracking-[0.2em]">
               © 2026 monedasjuegos. Todos los derechos reservados.
             </p>
             <div className="flex gap-4">

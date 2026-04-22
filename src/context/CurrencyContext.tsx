@@ -14,6 +14,7 @@ type CurrencyContextType = {
   vbucksRate: number;
   setSelectedCurrencyByName: (name: string) => void;
   formatPrice: (usdPrice: number) => string;
+  formatOnly: (convertedPrice: number) => string;
   calculateVBucksPrice: (vbucks: number) => number;
 };
 
@@ -23,7 +24,7 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
   const [vbucksRate, setVbucksRate] = useState<number>(0.25);
-  const [vbucksOverrides, setVbucksOverrides] = useState<Record<string, number>>({});
+  const [vbucksOverrides, setVbucksOverrides] = useState<Record<string, Record<string, number>>>({});
 
   useEffect(() => {
     Promise.all([
@@ -77,18 +78,31 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return `${converted.toFixed(2)}`;
   };
 
-  const calculateVBucksPrice = (vbucks: number): number => {
-    // Check if there is an override for this specific amount
-    const vKey = String(vbucks);
-    if (vbucksOverrides[vKey]) {
-      return vbucksOverrides[vKey];
+  const formatOnly = (convertedPrice: number) => {
+    if (!selectedCurrency) return `${convertedPrice.toFixed(2)}`;
+    
+    if (selectedCurrency.name === 'COP' || selectedCurrency.name === 'CLP' || selectedCurrency.name === 'ARS') {
+      return `${Math.round(convertedPrice).toLocaleString('es-CO')}`;
     }
-    // Otherwise use the base rate per 100 vbucks
-    return (vbucks / 100) * vbucksRate;
+    return `${convertedPrice.toFixed(2)}`;
+  };
+
+  const calculateVBucksPrice = (vbucks: number): number => {
+    const vKey = String(vbucks);
+    const overrides = vbucksOverrides[vKey];
+    
+    // 1. Check if there is an override for the CURRENT selected currency
+    if (overrides && selectedCurrency && overrides[selectedCurrency.name]) {
+      return overrides[selectedCurrency.name];
+    }
+
+    // 2. Otherwise use the base USD rate and convert it
+    const usdPrice = (vbucks / 100) * vbucksRate;
+    return usdPrice * (selectedCurrency?.rateToDolar || 1);
   };
 
   return (
-    <CurrencyContext.Provider value={{ currencies, selectedCurrency, vbucksRate, setSelectedCurrencyByName, formatPrice, calculateVBucksPrice }}>
+    <CurrencyContext.Provider value={{ currencies, selectedCurrency, vbucksRate, setSelectedCurrencyByName, formatPrice, formatOnly, calculateVBucksPrice }}>
       {children}
     </CurrencyContext.Provider>
   );

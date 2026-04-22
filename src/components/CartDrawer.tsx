@@ -2,18 +2,35 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function CartDrawer() {
-  const { items, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, total } = useCart();
+  const { items, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity } = useCart();
+  const { formatOnly, calculateVBucksPrice, selectedCurrency } = useCurrency();
+
+  // Calculate total based on current currency and overrides
+  const convertedTotal = items.reduce((sum, item) => {
+    const itemPrice = item.vbucks 
+      ? calculateVBucksPrice(item.vbucks) 
+      : item.price * (selectedCurrency?.rateToDolar || 1);
+    return sum + (itemPrice * item.quantity);
+  }, 0);
+
+  const getItemPrice = (item: any) => {
+    return item.vbucks 
+      ? calculateVBucksPrice(item.vbucks) 
+      : item.price * (selectedCurrency?.rateToDolar || 1);
+  };
 
   const handleCheckout = () => {
     if (items.length === 0) return;
     
     let text = "Hola, me gustaría comprar los siguientes productos:%0A%0A";
     items.forEach(item => {
-      text += `- ${item.quantity}x ${item.name} ($${item.price})%0A`;
+      const price = getItemPrice(item);
+      text += `- ${item.quantity}x ${item.name} (${selectedCurrency?.symbol}${formatOnly(price)})%0A`;
     });
-    text += `%0ATotal: $${total.toFixed(2)}`;
+    text += `%0ATotal: ${selectedCurrency?.symbol}${formatOnly(convertedTotal)}`;
     
     window.open(`https://wa.me/5491130990707?text=${text}`, '_blank');
   };
@@ -61,34 +78,37 @@ export default function CartDrawer() {
                   <p className="font-medium">Tu carrito está vacío</p>
                 </div>
               ) : (
-                items.map(item => (
-                  <div key={item.id} className="flex gap-4 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-2xl border border-gray-100 dark:border-gray-800">
-                    <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-xl" />
-                    <div className="flex-grow flex flex-col justify-between">
-                      <div>
-                        <h3 className="font-bold text-gray-900 dark:text-white text-sm line-clamp-2">{item.name}</h3>
-                        <p className="text-gold-600 font-black">${item.price}</p>
-                      </div>
-                      <div className="flex items-center justify-between mt-2">
-                        <div className="flex items-center gap-3 bg-white dark:bg-gray-700 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-600">
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="text-sm font-bold text-gray-900 dark:text-white w-4 text-center">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                            <Plus className="w-3 h-3" />
+                items.map(item => {
+                  const price = getItemPrice(item);
+                  return (
+                    <div key={item.id} className="flex gap-4 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-2xl border border-gray-100 dark:border-gray-800">
+                      <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-xl" />
+                      <div className="flex-grow flex flex-col justify-between">
+                        <div>
+                          <h3 className="font-bold text-gray-900 dark:text-white text-sm line-clamp-2">{item.name}</h3>
+                          <p className="text-gold-600 font-black">{selectedCurrency?.symbol} {formatOnly(price)}</p>
+                        </div>
+                        <div className="flex items-center justify-between mt-2">
+                          <div className="flex items-center gap-3 bg-white dark:bg-gray-700 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-600">
+                            <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white w-4 text-center">{item.quantity}</span>
+                            <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                              <Plus className="w-3 h-3" />
+                            </button>
+                          </div>
+                          <button 
+                            onClick={() => removeFromCart(item.id)}
+                            className="text-red-400 hover:text-red-500 p-1"
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
-                        <button 
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-red-400 hover:text-red-500 p-1"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
                       </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 
@@ -96,7 +116,9 @@ export default function CartDrawer() {
             <div className="p-6 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-gray-500 dark:text-gray-400 font-medium">Total</span>
-                <span className="text-2xl font-black text-gray-900 dark:text-white">${total.toFixed(2)}</span>
+                <span className="text-2xl font-black text-gray-900 dark:text-white">
+                  {selectedCurrency?.symbol} {formatOnly(convertedTotal)}
+                </span>
               </div>
               <button 
                 onClick={handleCheckout}

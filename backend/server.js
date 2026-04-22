@@ -16,9 +16,8 @@ const PORT = 5000;
 const SECRET_KEY = 'monedas_secret_admin_key_2026';
 const DB_FILE = path.join(__dirname, 'db.json');
 
-// Hardcoded Admin Credentials
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'admin123';
+// Admin credentials will be stored in db.json for security and flexibility
+// Default will be initialized in initDB if not present
 
 // Simple JSON DB Implementation
 const initDB = () => {
@@ -128,6 +127,13 @@ const initDB = () => {
       db.faqs = [];
       updated = true;
     }
+    if (!db.admin) {
+      db.admin = { 
+        user: 'monedasjuegos', 
+        pass: 'leomessi10!' 
+      };
+      updated = true;
+    }
     if (!db.testimonials) {
       db.testimonials = [];
       updated = true;
@@ -159,7 +165,9 @@ const verifyToken = (req, res, next) => {
 // ---------------
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
+  const db = readDB();
+  
+  if (db.admin && username === db.admin.user && password === db.admin.pass) {
     const token = jwt.sign({ user: username, role: 'admin' }, SECRET_KEY, { expiresIn: '24h' });
     return res.json({ token, role: 'admin' });
   }
