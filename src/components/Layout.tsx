@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useCurrency } from '../context/CurrencyContext';
 import CartDrawer from './CartDrawer';
 import WhatsAppButton from './WhatsAppButton';
+import { API_URL } from '../config/api';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
