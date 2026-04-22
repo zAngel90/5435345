@@ -232,7 +232,7 @@ export default function Catalog() {
         {/* Global Toolbar */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100 dark:border-gray-800">
           <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-wider">
-            {activeCategory} <span className="text-gray-400 text-base ml-2">({filteredProducts.length})</span>
+            {categories.find(c => c.id === activeCategory)?.name || activeCategory} <span className="text-gray-400 text-base ml-2">({filteredProducts.length})</span>
           </h2>
         </motion.div>
 
