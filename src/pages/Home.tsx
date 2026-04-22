@@ -218,32 +218,23 @@ export default function Home() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />
-            </div>
-            <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Pago Seguro</h4>
-            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">Cifrado de grado militar para proteger tus transacciones al 100%.</p>
-          </motion.div>
-
-          <motion.div {...fadeUp(0.3)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-purple-500/30 transition-colors shadow-sm hover:shadow-md lg:col-span-2 relative overflow-hidden flex flex-col justify-center">
-            <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-               <Trophy className="w-32 h-32 sm:w-48 sm:h-48 text-purple-500" />
-            </div>
-            <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
-               <div className="flex-1">
-                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform bg-purple-50 dark:bg-purple-900/20">
-                   <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
-                 </div>
-                 <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Ofertas Imbatibles</h4>
-                 <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm max-w-sm leading-relaxed">Conectamos directo con distribuidores oficiales para ahorrarte en promedio un 35% en tus juegos.</p>
-               </div>
-               <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl px-4 py-3 sm:px-5 sm:py-4 shadow-inner border border-gray-100 dark:border-gray-700 flex items-center gap-3 sm:gap-4 shrink-0 shadow-purple-500/5 dark:shadow-purple-500/10">
-                 <div className="bg-white dark:bg-gray-900 rounded-full p-1.5 sm:p-2 shadow-sm"><TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" /></div>
-                 <div><p className="text-[10px] sm:text-xs font-bold text-gray-500">Ahorro Medio</p><p className="text-base sm:text-lg font-black text-gray-900 dark:text-white tracking-tight">-35% DESC</p></div>
-               </div>
-            </div>
-          </motion.div>
-
+          {(settings?.features || [
+            { title: 'Velocidad Relámpago', desc: 'Nuestro sistema automatizado entrega códigos en milisegundos tras tu pago.' },
+            { title: 'Pago Seguro', desc: 'Cifrado de grado militar para proteger tus transacciones al 100%.' },
+            { title: 'Ofertas Imbatibles', desc: 'Conectamos directo con distribuidores oficiales para ahorrarte en promedio un 35% en tus juegos.' }
+          ]).map((feature: any, idx: number) => (
+            <motion.div 
+              key={idx} 
+              {...fadeUp(0.1 * (idx + 1))} 
+              className={`bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-gold-500/30 transition-colors shadow-sm hover:shadow-md group ${idx === 2 ? 'lg:col-span-2' : ''}`}
+            >
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
+                {idx === 0 ? <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-gold-500" /> : idx === 1 ? <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" /> : <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />}
+              </div>
+              <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">{feature.title}</h4>
+              <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">{feature.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
