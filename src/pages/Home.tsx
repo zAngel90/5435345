@@ -16,8 +16,9 @@ export default function Home() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [faqs, setFaqs] = useState<any[]>([]);
   const [testimonials, setTestimonials] = useState<any[]>([]);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const [carouselWidth, setCarouselWidth] = useState(0);
+  const [settings, setSettings] = useState<any>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   
   const x = useMotionValue(0);
   const direction = useRef(-1); // -1 moves left, 1 moves right
@@ -67,13 +68,10 @@ export default function Home() {
 
     fetch(`${API_URL}/testimonials`).then(res => res.json()).then(data => {
       if (data && data.length > 0) setTestimonials(data);
-      else setTestimonials([
-        { name: "Carlos M.", role: "Pro Player", text: "Mejoraron la velocidad de entrega de forma increíble. Compré mis V-Bucks y en 10 segundos ya los tenía en mi cuenta." },
-        { name: "Laura G.", role: "Streamer", text: "Siempre uso MonedasJuegos para comprar tarjetas de PlayStation y sortearlas. Es la plataforma más confiable del mercado actual." },
-        { name: "Andrés F.", role: "Casual Gamer", text: "La interfaz es hermosa y el soporte en WhatsApp me ayudó al instante cuando tuve una duda con mi primera compra. 10/10." },
-        { name: "Miguel T.", role: "Esports Coach", text: "Compramos keys para todo el equipo acá. Nunca tuvimos un solo problema. La pasarela de pagos es un absoluto éxito." },
-        { name: "Sofía R.", role: "Creadora de Contenido", text: "Poder conseguir Roblox Gift Cards sin tanto rollo es genial. Mis seguidores también compran directo aquí con total confianza." },
-      ]);
+    });
+
+    fetch(`${API_URL}/settings`).then(res => res.json()).then(data => {
+      setSettings(data);
     });
 
     const updateWidth = () => {
@@ -128,16 +126,16 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
               </span>
-              Plataforma Global de Gaming
+              {settings?.heroBadge || 'Plataforma Global de Gaming'}
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
               className="text-4xl sm:text-6xl lg:text-[4.5rem] font-black tracking-tight text-gray-900 dark:text-white leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6"
             >
-              TU ARSENAL <br />
+              {settings?.heroTitle?.split(' con ')[0] || 'TU ARSENAL'} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-600 to-gold-400 dark:from-gold-400 dark:to-gold-200 mt-1 sm:mt-2 block">
-                LLEVADO AL LÍMITE
+                {settings?.heroTitle?.split(' con ')[1] ? `CON ${settings.heroTitle.split(' con ')[1]}` : 'LLEVADO AL LÍMITE'}
               </span>
             </motion.h1>
 
@@ -145,7 +143,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
               className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 font-medium mb-8 sm:mb-10 max-w-lg leading-relaxed"
             >
-              Recargas instantáneas, llaves globales y pases premium. Potencia tu experiencia de juego sin interrupciones.
+              {settings?.heroSubtitle || 'Recargas instantáneas, llaves globales y pases premium. Potencia tu experiencia de juego sin interrupciones.'}
             </motion.p>
 
             <motion.div 
@@ -153,13 +151,13 @@ export default function Home() {
               className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto"
             >
               <Link to="/catalogo" className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 dark:bg-gold-500 text-white dark:text-gray-900 rounded-full font-bold text-base hover:scale-105 transition-all shadow-md">
-                Ver Catálogo <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {settings?.ctaPrimary || 'Ver Catálogo'} <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <button 
                 onClick={() => document.getElementById('bento-features')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-full sm:w-auto px-6 py-3 rounded-full font-bold text-base text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               >
-                Saber más
+                {settings?.ctaSecondary || 'Saber más'}
               </button>
             </motion.div>
           </div>
@@ -175,12 +173,12 @@ export default function Home() {
       <section className="w-full bg-white dark:bg-gray-900/50 border-y border-gray-100 dark:border-gray-800 py-8 sm:py-12 relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-transparent md:divide-gray-200 md:dark:divide-gray-800 text-center">
-            {[
+            {(settings?.heroStats || [
               { label: "Usuarios Activos", value: "50K+" },
               { label: "Transacciones Seguras", value: "99.9%" },
               { label: "Tiempo de Entrega", value: "< 1 min" },
               { label: "Juegos Disponibles", value: "2,500+" }
-            ].map((stat, i) => (
+            ]).map((stat: any, i: number) => (
               <motion.div key={i} {...fadeUp(i * 0.1)} className="flex flex-col items-center">
                 <span className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-2">{stat.value}</span>
                 <span className="text-sm sm:text-base font-bold text-gray-500 dark:text-gold-500 uppercase tracking-wider">{stat.label}</span>
@@ -209,9 +207,9 @@ export default function Home() {
       <section id="bento-features" className="py-8 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-b border-gray-100/50 dark:border-gray-800/50 relative z-10">
         <motion.div {...fadeUp(0)} className="mb-8 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
           <div>
-            <h2 className="text-xs font-bold text-gold-500 uppercase tracking-widest mb-1 sm:mb-2">Por qué elegirnos</h2>
+            <h2 className="text-xs font-bold text-gold-500 uppercase tracking-widest mb-1 sm:mb-2">{settings?.featuresSubtitle || 'Por qué elegirnos'}</h2>
             <h3 className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white">
-              Diseñado para el <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">rendimiento</span>
+              {settings?.featuresTitle?.split(' el ')[0] || 'Diseñado para el'} <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">{settings?.featuresTitle?.split(' el ')[1] || 'rendimiento'}</span>
             </h3>
           </div>
           <p className="text-gray-500 dark:text-gray-400 md:max-w-sm text-xs sm:text-sm font-medium">
@@ -221,16 +219,6 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <motion.div {...fadeUp(0.1)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-gold-500/30 transition-colors shadow-sm hover:shadow-md group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
-              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-gold-500" />
-            </div>
-            <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Velocidad Relámpago</h4>
-            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">Nuestro sistema automatizado entrega códigos en milisegundos tras tu pago.</p>
-          </motion.div>
-
-          <motion.div {...fadeUp(0.2)} className="bg-white dark:bg-gray-900/50 rounded-3xl p-5 sm:p-8 border border-gray-100 dark:border-gray-800 hover:border-indigo-500/30 transition-colors shadow-sm hover:shadow-md group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-50 dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />
             </div>
             <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">Pago Seguro</h4>
@@ -373,8 +361,8 @@ export default function Home() {
 
           <div className="relative z-10 p-8 sm:p-20 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-xl">
-              <h2 className="text-4xl sm:text-5xl font-black text-white dark:text-gray-900 mb-4 leading-tight">¿Listo para subir de nivel?</h2>
-              <p className="text-xl text-gray-300 dark:text-gray-800/80 mb-8 font-medium">Únete a miles de jugadores que ya confían en nosotros para sus recargas.</p>
+              <h2 className="text-4xl sm:text-5xl font-black text-white dark:text-gray-900 mb-4 leading-tight">{settings?.ctaTitle || '¿Listo para subir de nivel?'}</h2>
+              <p className="text-xl text-gray-300 dark:text-gray-800/80 mb-8 font-medium">{settings?.ctaSubtitle || 'Únete a miles de jugadores que ya confían en nosotros para sus recargas.'}</p>
               <Link
                 to="/catalogo"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-gold-500 dark:bg-gray-900 text-gray-900 dark:text-white rounded-full font-black text-lg shadow-lg hover:scale-105 transition-transform duration-300"

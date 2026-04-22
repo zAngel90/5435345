@@ -212,6 +212,100 @@ export default function Admin() {
           </div>
         </form>
       );
+      case 'content': return (
+        <form onSubmit={handleSaveSettings} className="space-y-8 max-w-4xl pb-12">
+          {/* Hero Section */}
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 space-y-4">
+            <h3 className="font-black text-xl mb-2 dark:text-white flex items-center gap-2"><Zap className="text-gold-500" /> Sección Hero (Inicio)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="md:col-span-2">
+                <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Título Principal</label>
+                <input type="text" value={data.settings?.heroTitle || ''} onChange={(e) => setData({...data, settings: { ...data.settings, heroTitle: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-bold focus:ring-2 focus:ring-gold-500" />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Subtítulo / Descripción</label>
+                <textarea value={data.settings?.heroSubtitle || ''} onChange={(e) => setData({...data, settings: { ...data.settings, heroSubtitle: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-gold-500 h-24" />
+              </div>
+            </div>
+            
+            <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+              <h4 className="font-bold text-sm text-gray-400 uppercase tracking-widest mb-4">Estadísticas del Hero</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {(data.settings?.heroStats || []).map((stat: any, idx: number) => (
+                  <div key={idx} className="space-y-2">
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-tighter">Etiqueta {idx + 1}</label>
+                    <input type="text" value={stat.label} onChange={(e) => {
+                      const newStats = [...data.settings.heroStats];
+                      newStats[idx].label = e.target.value;
+                      setData({...data, settings: { ...data.settings, heroStats: newStats }});
+                    }} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-lg py-2 px-3 text-xs text-gray-900 dark:text-white font-bold" />
+                    <input type="text" value={stat.value} onChange={(e) => {
+                      const newStats = [...data.settings.heroStats];
+                      newStats[idx].value = e.target.value;
+                      setData({...data, settings: { ...data.settings, heroStats: newStats }});
+                    }} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-lg py-2 px-3 text-xs text-gold-500 font-black" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 space-y-4">
+            <h3 className="font-black text-xl mb-2 dark:text-white flex items-center gap-2"><LayoutGrid className="text-gold-500" /> Sección "Por qué elegirnos"</h3>
+            <div>
+              <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Título de la Sección</label>
+              <input type="text" value={data.settings?.featuresTitle || ''} onChange={(e) => setData({...data, settings: { ...data.settings, featuresTitle: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-bold focus:ring-2 focus:ring-gold-500" />
+            </div>
+            <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+              {(data.settings?.features || []).map((feature: any, idx: number) => (
+                <div key={idx} className="p-4 bg-gray-50 dark:bg-gray-900/50 rounded-2xl space-y-3">
+                  <label className="block text-xs font-black text-indigo-500 uppercase">Característica {idx + 1}</label>
+                  <input type="text" value={feature.title} onChange={(e) => {
+                    const newFeatures = [...data.settings.features];
+                    newFeatures[idx].title = e.target.value;
+                    setData({...data, settings: { ...data.settings, features: newFeatures }});
+                  }} className="w-full bg-white dark:bg-gray-900 border-none rounded-xl py-2 px-4 text-sm text-gray-900 dark:text-white font-bold" />
+                  <textarea value={feature.desc} onChange={(e) => {
+                    const newFeatures = [...data.settings.features];
+                    newFeatures[idx].desc = e.target.value;
+                    setData({...data, settings: { ...data.settings, features: newFeatures }});
+                  }} className="w-full bg-white dark:bg-gray-900 border-none rounded-xl py-2 px-4 text-sm text-gray-500 dark:text-gray-400 h-20" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Catalog Section */}
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 space-y-4">
+            <h3 className="font-black text-xl mb-2 dark:text-white flex items-center gap-2"><DollarSign className="text-gold-500" /> Sección Catálogo</h3>
+            <div>
+              <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Descripción del Catálogo</label>
+              <textarea value={data.settings?.catalogDesc || ''} onChange={(e) => setData({...data, settings: { ...data.settings, catalogDesc: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-medium focus:ring-2 focus:ring-gold-500 h-24" />
+            </div>
+          </div>
+
+          {/* CTA & Footer */}
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 space-y-6">
+            <h3 className="font-black text-xl mb-2 dark:text-white flex items-center gap-2"><Save className="text-gold-500" /> CTA Final & Footer</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-bold text-xs text-gray-400 uppercase tracking-widest">Banner de Acción Final</h4>
+                <input type="text" placeholder="Título" value={data.settings?.ctaTitle || ''} onChange={(e) => setData({...data, settings: { ...data.settings, ctaTitle: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-bold" />
+                <input type="text" placeholder="Subtítulo" value={data.settings?.ctaSubtitle || ''} onChange={(e) => setData({...data, settings: { ...data.settings, ctaSubtitle: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-500" />
+              </div>
+              <div className="space-y-4">
+                <h4 className="font-bold text-xs text-gray-400 uppercase tracking-widest">Contenido del Footer</h4>
+                <textarea placeholder="Descripción en el Footer" value={data.settings?.footerDesc || ''} onChange={(e) => setData({...data, settings: { ...data.settings, footerDesc: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-medium h-32" />
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" className="flex items-center justify-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black px-8 py-5 rounded-3xl hover:shadow-2xl w-full transition-all hover:scale-[1.02] active:scale-95 text-lg">
+            <Save className="w-6 h-6"/> Guardar Todos los Cambios del Sitio
+          </button>
+        </form>
+      );
       case 'currencies': return (
         <table className="w-full text-left">
           <thead><tr className="border-b dark:border-gray-800 text-gray-500 text-sm uppercase"><th className="pb-3">Moneda</th><th className="pb-3">Símbolo</th><th className="pb-3">Valor vs USD</th><th className="pb-3 text-right">Acciones</th></tr></thead>
@@ -305,6 +399,7 @@ export default function Admin() {
               { id: 'products', name: 'Productos', icon: Package },
               { id: 'categories', name: 'Categorías', icon: LayoutGrid },
               { id: 'currencies', name: 'Divisas', icon: DollarSign },
+              { id: 'content', name: 'Contenido Web', icon: MessageSquare },
               { id: 'faqs', name: 'FAQ', icon: HelpCircle },
               { id: 'testimonials', name: 'Testimonios', icon: MessageSquare },
               { id: 'settings', name: 'Configuración', icon: Settings }
@@ -369,7 +464,7 @@ export default function Admin() {
                       <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Categoría</label>
                       <select value={currentItem.category || ''} onChange={e => setCurrentItem({...currentItem, category: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-gold-500" required>
                         <option value="">Seleccionar...</option>
-                        {data.categories.map((c: any) => <option key={c.id} value={c.name}>{c.name}</option>)}
+                        {data.categories.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
                       </select>
                     </div>
                   </div>

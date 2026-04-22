@@ -39,7 +39,27 @@ const initDB = () => {
       users: [],
       faqs: [],
       testimonials: [],
-      settings: { vbucksRateInUsd: 0.25 }
+      settings: { 
+        vbucksRateInUsd: 0.25,
+        heroTitle: 'Domina el Campo de Juego con MonedasJuegos',
+        heroSubtitle: 'La plataforma líder para potenciar tu experiencia en Fortnite. Créditos, skins y pavos al mejor precio del mercado.',
+        heroStats: [
+          { label: 'Usuarios Activos', value: '50k+' },
+          { label: 'Transacciones Seguras', value: '100k+' },
+          { label: 'Tiempo de Entrega', value: '5min' },
+          { label: 'Stock Disponible', value: '1M+' }
+        ],
+        featuresTitle: '¿Por qué elegirnos?',
+        features: [
+          { title: 'Diseñado para el Rendimiento', desc: 'Nuestra plataforma está optimizada para que tus recargas sean instantáneas.' },
+          { title: 'Seguridad de Grado Militar', desc: 'Tus datos y transacciones están protegidos por encriptación de última generación.' },
+          { title: 'Soporte 24/7', desc: 'Un equipo de expertos siempre listo para ayudarte en lo que necesites.' }
+        ],
+        footerDesc: 'Tu socio de confianza para elevar tu nivel de juego. La mejor calidad y seguridad en cada transacción.',
+        catalogDesc: 'Explora nuestra inmensa selección de créditos virtuales, juegos y tarjetas. Selecciona una categoría para empezar.',
+        ctaTitle: '¿Listo para subir de nivel?',
+        ctaSubtitle: 'Únete a miles de jugadores que ya confían en nosotros.'
+      }
     }, null, 2));
   } else {
     // Asegurarse de que exista el array users y settings en una db existente
@@ -50,8 +70,56 @@ const initDB = () => {
       updated = true;
     }
     if (!db.settings) {
-      db.settings = { vbucksRateInUsd: 0.25 };
+      db.settings = { 
+        vbucksRateInUsd: 0.25,
+        heroTitle: 'Domina el Campo de Juego con MonedasJuegos',
+        heroSubtitle: 'La plataforma líder para potenciar tu experiencia en Fortnite. Créditos, skins y pavos al mejor precio del mercado.',
+        heroStats: [
+          { label: 'Usuarios Activos', value: '50k+' },
+          { label: 'Transacciones Seguras', value: '100k+' },
+          { label: 'Tiempo de Entrega', value: '5min' },
+          { label: 'Stock Disponible', value: '1M+' }
+        ],
+        featuresTitle: '¿Por qué elegirnos?',
+        features: [
+          { title: 'Diseñado para el Rendimiento', desc: 'Nuestra plataforma está optimizada para que tus recargas sean instantáneas.' },
+          { title: 'Seguridad de Grado Militar', desc: 'Tus datos y transacciones están protegidos por encriptación de última generación.' },
+          { title: 'Soporte 24/7', desc: 'Un equipo de expertos siempre listo para ayudarte en lo que necesites.' }
+        ],
+        footerDesc: 'Tu socio de confianza para elevar tu nivel de juego. La mejor calidad y seguridad en cada transacción.',
+        catalogDesc: 'Explora nuestra inmensa selección de créditos virtuales, juegos y tarjetas. Selecciona una categoría para empezar.',
+        ctaTitle: '¿Listo para subir de nivel?',
+        ctaSubtitle: 'Únete a miles de jugadores que ya confían en nosotros.'
+      };
       updated = true;
+    } else {
+      // Ensure all specific fields exist
+      const defaultSettings = {
+        heroTitle: 'Domina el Campo de Juego con MonedasJuegos',
+        heroSubtitle: 'La plataforma líder para potenciar tu experiencia en Fortnite. Créditos, skins y pavos al mejor precio del mercado.',
+        heroStats: [
+          { label: 'Usuarios Activos', value: '50k+' },
+          { label: 'Transacciones Seguras', value: '100k+' },
+          { label: 'Tiempo de Entrega', value: '5min' },
+          { label: 'Stock Disponible', value: '1M+' }
+        ],
+        featuresTitle: '¿Por qué elegirnos?',
+        features: [
+          { title: 'Diseñado para el Rendimiento', desc: 'Nuestra plataforma está optimizada para que tus recargas sean instantáneas.' },
+          { title: 'Seguridad de Grado Militar', desc: 'Tus datos y transacciones están protegidos por encriptación de última generación.' },
+          { title: 'Soporte 24/7', desc: 'Un equipo de expertos siempre listo para ayudarte en lo que necesites.' }
+        ],
+        footerDesc: 'Tu socio de confianza para elevar tu nivel de juego. La mejor calidad y seguridad en cada transacción.',
+        catalogDesc: 'Explora nuestra inmensa selección de créditos virtuales, juegos y tarjetas. Selecciona una categoría para empezar.',
+        ctaTitle: '¿Listo para subir de nivel?',
+        ctaSubtitle: 'Únete a miles de jugadores que ya confían en nosotros.'
+      };
+      Object.keys(defaultSettings).forEach(key => {
+        if (db.settings[key] === undefined) {
+          db.settings[key] = defaultSettings[key];
+          updated = true;
+        }
+      });
     }
     if (!db.faqs) {
       db.faqs = [];

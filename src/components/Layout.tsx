@@ -14,6 +14,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [footerDesc, setFooterDesc] = useState("Tu destino premium para recargas y juegos. Diseñado para gamers que exigen lo mejor, más rápido y seguro.");
+
+  useEffect(() => {
+    fetch(`${API_URL}/settings`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.footerDesc) setFooterDesc(data.footerDesc);
+      })
+      .catch(err => console.error("Error loading footer settings", err));
+  }, []);
 
 
 
@@ -190,49 +200,42 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Footer */}
       <footer className="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 pt-20 pb-10 mt-20 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="md:col-span-2">
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-4 mb-6">
                 <img 
-                  src="https://i.postimg.cc/gJRjBt94/68a1010c-b56a-418b-a922-e759cfa68b1b.jpg" 
+                  src="https://i.postimg.cc/SxthTFKb/Whats-App-Image-2026-04-20-at-8-31-10-PM-Photoroom-(1).png" 
                   alt="MonedasJuegos Logo" 
-                  className="w-12 h-12 rounded-full object-cover shadow-sm"
+                  className="h-16 w-auto object-contain drop-shadow-lg"
                 />
                 <span className="font-black text-2xl tracking-wider text-gray-800 dark:text-white uppercase">MONEDAS<span className="text-gold-400">JUEGOS</span></span>
               </div>
-              <p className="text-gray-500 dark:text-gray-400 font-medium max-w-sm">
-                Tu destino premium para recargas y juegos. Diseñado para gamers que exigen lo mejor, más rápido y seguro.
+              <p className="text-gray-500 dark:text-gray-400 font-medium max-w-lg leading-relaxed">
+                {footerDesc}
               </p>
             </div>
             <div>
-              <h4 className="font-black text-gray-800 dark:text-white mb-6">Enlaces Rápidos</h4>
-              <ul className="space-y-4 text-gray-500 dark:text-gray-400 font-medium">
+              <h4 className="font-black text-gray-800 dark:text-white mb-6 uppercase tracking-widest text-sm">Navegación</h4>
+              <ul className="space-y-4 text-gray-500 dark:text-gray-400 font-bold uppercase text-xs tracking-wider">
                 <li><Link to="/" className="hover:text-gold-500 transition-colors">Inicio</Link></li>
-                <li><Link to="/catalogo" className="hover:text-gold-500 transition-colors">Catálogo Completo</Link></li>
-                <li><a href="#" className="hover:text-gold-500 transition-colors">Ofertas Especiales</a></li>
-                <li><a href="#" className="hover:text-gold-500 transition-colors">Soporte Técnico</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-black text-gray-800 dark:text-white mb-6">Legal</h4>
-              <ul className="space-y-4 text-gray-500 dark:text-gray-400 font-medium">
-                <li><a href="#" className="hover:text-gold-500 transition-colors">Términos de Servicio</a></li>
-                <li><a href="#" className="hover:text-gold-500 transition-colors">Política de Privacidad</a></li>
-                <li><a href="#" className="hover:text-gold-500 transition-colors">Reembolsos</a></li>
+                <li><Link to="/catalogo" className="hover:text-gold-500 transition-colors">Catálogo</Link></li>
+                <li><Link to="/tienda-diaria" className="hover:text-gold-500 transition-colors">Tienda FN</Link></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-100 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 font-medium text-sm">
-              © 2025 monedasjuegos. Todos los derechos reservados.
+            <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">
+              © 2026 monedasjuegos. Todos los derechos reservados.
             </p>
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-gold-50 dark:hover:bg-gold-900/20 hover:text-gold-500 transition-colors cursor-pointer">
-                <span className="font-bold text-sm">IG</span>
-              </div>
-              <div className="w-10 h-10 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-gold-50 dark:hover:bg-gold-900/20 hover:text-gold-500 transition-colors cursor-pointer">
-                <span className="font-bold text-sm">TW</span>
-              </div>
+              <a 
+                href="https://www.instagram.com/monedasjuegos/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-gold-50 dark:hover:bg-gold-900/20 hover:text-gold-500 transition-all cursor-pointer shadow-sm"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>

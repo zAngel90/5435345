@@ -50,6 +50,7 @@ export default function Catalog() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [catalogDesc, setCatalogDesc] = useState("Explora nuestra inmensa selección de créditos virtuales, juegos y tarjetas. Selecciona una categoría para empezar.");
 
   // Reset pagination when category changes
   useEffect(() => {
@@ -59,12 +60,15 @@ export default function Catalog() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [catRes, prodRes] = await Promise.all([
+        const [catRes, prodRes, setRes] = await Promise.all([
           fetch(`${API_URL}/categories`),
-          fetch(`${API_URL}/products`)
+          fetch(`${API_URL}/products`),
+          fetch(`${API_URL}/settings`)
         ]);
         setCategories(await catRes.json());
         setProducts(await prodRes.json());
+        const settings = await setRes.json();
+        setCatalogDesc(settings.catalogDesc);
       } catch (err) {
         console.error("Error cargando catálogo", err);
       } finally {
@@ -139,7 +143,7 @@ export default function Catalog() {
               Catálogo <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-400 italic">Premium</span>
             </h1>
             <p className="text-gray-500 dark:text-gray-400 font-medium text-lg max-w-2xl">
-              Explora nuestra inmensa selección de créditos virtuales, juegos y tarjetas. Selecciona una categoría para empezar.
+              {catalogDesc}
             </p>
           </motion.div>
         </div>
@@ -172,7 +176,7 @@ export default function Catalog() {
           >
             {categories.map((cat, idx) => {
               const Icon = ICONS_MAP[cat.icon] || LayoutGrid;
-              const isActive = activeCategory === cat.name;
+              const isActive = activeCategory === cat.id;
 
               return (
                 <motion.button
@@ -180,7 +184,7 @@ export default function Catalog() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={() => setActiveCategory(cat.name)}
+                  onClick={() => setActiveCategory(cat.id)}
                   className={`relative overflow-hidden group snap-center flex-shrink-0 w-[85vw] sm:w-[320px] lg:w-[380px] min-h-[160px] sm:min-h-[220px] rounded-3xl border-2 transition-all duration-500 text-left flex flex-col justify-end p-5 sm:p-6 ${
                     isActive ? 'border-gold-500 shadow-2xl shadow-gold-500/30' : 'border-transparent hover:border-white/30 hover:shadow-xl'
                   } ${!isActive && 'opacity-90 hover:opacity-100'}`}
