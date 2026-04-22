@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, Plus, Trash2, Edit, Save, X, LogOut, Settings, DollarSign, Package, LayoutGrid, HelpCircle, MessageSquare } from 'lucide-react';
+import { Lock, Plus, Trash2, Edit, Save, X, LogOut, Settings, DollarSign, Package, LayoutGrid, HelpCircle, MessageSquare, Zap } from 'lucide-react';
 import { API_URL } from '../config/api';
 
 export default function Admin() {

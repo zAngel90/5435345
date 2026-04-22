@@ -80,7 +80,10 @@ export default function Catalog() {
 
   const filteredProducts = activeCategory === "Todos" 
     ? products 
-    : products.filter(p => p.category === activeCategory);
+    : products.filter(p => {
+        const categoryObj = categories.find(c => c.id === activeCategory);
+        return p.category === activeCategory || (categoryObj && p.category === categoryObj.name);
+      });
 
   const ITEMS_PER_PAGE = 8;
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
