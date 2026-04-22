@@ -19,7 +19,7 @@ export default function TiendaDiaria() {
   const [activeTab, setActiveTab] = useState<string>('all');
   
   const { addToCart } = useCart();
-  const { formatPrice, selectedCurrency, calculateVBucksPrice } = useCurrency();
+  const { formatPrice, formatOnly, selectedCurrency, calculateVBucksPrice } = useCurrency();
 
   const scrollToSection = (id: string) => {
     const sanitizedId = id.replace(/\s+/g, '-').toLowerCase();
