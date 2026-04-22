@@ -41,6 +41,7 @@ const initDB = () => {
       testimonials: [],
       settings: { 
         vbucksRateInUsd: 0.25,
+        vbucksOverrides: {},
         heroTitle: 'Domina el Campo de Juego con MonedasJuegos',
         heroSubtitle: 'La plataforma líder para potenciar tu experiencia en Fortnite. Créditos, skins y pavos al mejor precio del mercado.',
         heroStats: [
@@ -72,6 +73,7 @@ const initDB = () => {
     if (!db.settings) {
       db.settings = { 
         vbucksRateInUsd: 0.25,
+        vbucksOverrides: {},
         heroTitle: 'Domina el Campo de Juego con MonedasJuegos',
         heroSubtitle: 'La plataforma líder para potenciar tu experiencia en Fortnite. Créditos, skins y pavos al mejor precio del mercado.',
         heroStats: [
@@ -112,7 +114,8 @@ const initDB = () => {
         footerDesc: 'Tu socio de confianza para elevar tu nivel de juego. La mejor calidad y seguridad en cada transacción.',
         catalogDesc: 'Explora nuestra inmensa selección de créditos virtuales, juegos y tarjetas. Selecciona una categoría para empezar.',
         ctaTitle: '¿Listo para subir de nivel?',
-        ctaSubtitle: 'Únete a miles de jugadores que ya confían en nosotros.'
+        ctaSubtitle: 'Únete a miles de jugadores que ya confían en nosotros.',
+        vbucksOverrides: {}
       };
       Object.keys(defaultSettings).forEach(key => {
         if (db.settings[key] === undefined) {

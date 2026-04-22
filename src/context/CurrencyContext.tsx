@@ -14,6 +14,7 @@ type CurrencyContextType = {
   vbucksRate: number;
   setSelectedCurrencyByName: (name: string) => void;
   formatPrice: (usdPrice: number) => string;
+  calculateVBucksPrice: (vbucks: number) => number;
 };
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
@@ -22,6 +23,7 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
   const [vbucksRate, setVbucksRate] = useState<number>(0.25);
+  const [vbucksOverrides, setVbucksOverrides] = useState<Record<string, number>>({});
 
   useEffect(() => {
     Promise.all([
@@ -34,6 +36,9 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         
         if (settings && settings.vbucksRateInUsd) {
           setVbucksRate(settings.vbucksRateInUsd);
+        }
+        if (settings && settings.vbucksOverrides) {
+          setVbucksOverrides(settings.vbucksOverrides);
         }
 
         if(data && data.length > 0) {
@@ -72,8 +77,18 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return `${converted.toFixed(2)}`;
   };
 
+  const calculateVBucksPrice = (vbucks: number): number => {
+    // Check if there is an override for this specific amount
+    const vKey = String(vbucks);
+    if (vbucksOverrides[vKey]) {
+      return vbucksOverrides[vKey];
+    }
+    // Otherwise use the base rate per 100 vbucks
+    return (vbucks / 100) * vbucksRate;
+  };
+
   return (
-    <CurrencyContext.Provider value={{ currencies, selectedCurrency, vbucksRate, setSelectedCurrencyByName, formatPrice }}>
+    <CurrencyContext.Provider value={{ currencies, selectedCurrency, vbucksRate, setSelectedCurrencyByName, formatPrice, calculateVBucksPrice }}>
       {children}
     </CurrencyContext.Provider>
   );

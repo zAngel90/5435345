@@ -206,6 +206,60 @@ export default function Admin() {
               </div>
               <p className="text-xs text-gray-500 mt-2">Ejemplo: Si pones 0.25, un skin de 1,500 pavos costará $3.75 USD y luego se multiplicará por la moneda del cliente.</p>
             </div>
+
+            <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
+              <h3 className="font-black text-lg mb-4 dark:text-white flex items-center gap-2"><Zap className="w-5 h-5 text-gold-500" /> Excepciones de Precios</h3>
+              <div className="space-y-3">
+                {Object.entries(data.settings?.vbucksOverrides || {}).map(([vbucks, price]) => (
+                  <div key={vbucks} className="flex items-center gap-4 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-xl border border-gray-100 dark:border-gray-800">
+                    <span className="font-bold text-sm text-gray-700 dark:text-gray-300 w-24">{vbucks} Pavos</span>
+                    <span className="font-black text-gold-500">$ {price as number} USD</span>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        const newOverrides = { ...data.settings.vbucksOverrides };
+                        delete newOverrides[vbucks];
+                        setData({ ...data, settings: { ...data.settings, vbucksOverrides: newOverrides } });
+                      }}
+                      className="ml-auto text-red-500 hover:text-red-700 p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+                
+                <div className="flex items-center gap-2 bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800/30 mt-4">
+                  <div className="flex-1">
+                    <input id="new-vbucks" type="number" placeholder="Pavos" className="w-full bg-white dark:bg-gray-800 border-none rounded-lg py-2 px-3 text-xs font-bold" />
+                  </div>
+                  <div className="flex-1">
+                    <input id="new-price" type="number" step="0.01" placeholder="Precio USD" className="w-full bg-white dark:bg-gray-800 border-none rounded-lg py-2 px-3 text-xs font-bold" />
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      const v = (document.getElementById('new-vbucks') as HTMLInputElement).value;
+                      const p = (document.getElementById('new-price') as HTMLInputElement).value;
+                      if (v && p) {
+                        setData({ 
+                          ...data, 
+                          settings: { 
+                            ...data.settings, 
+                            vbucksOverrides: { ...data.settings.vbucksOverrides, [v]: parseFloat(p) } 
+                          } 
+                        });
+                        (document.getElementById('new-vbucks') as HTMLInputElement).value = '';
+                        (document.getElementById('new-price') as HTMLInputElement).value = '';
+                      }
+                    }}
+                    className="bg-indigo-600 text-white px-3 py-2 rounded-lg text-xs font-black hover:bg-indigo-700 transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-500 mt-4 leading-relaxed">Usa esto para productos específicos (ej: 1500 pavos) que quieras vender a un precio fijo independientemente de la tasa general.</p>
+            </div>
             <button type="submit" className="mt-6 flex items-center justify-center gap-2 bg-gold-500 text-gray-900 font-black px-6 py-3 rounded-xl hover:shadow-lg w-full transition-all hover:scale-105 active:scale-95">
               <Save className="w-5 h-5"/> Guardar Configuración
             </button>

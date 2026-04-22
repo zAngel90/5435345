@@ -19,7 +19,7 @@ export default function TiendaDiaria() {
   const [activeTab, setActiveTab] = useState<string>('all');
   
   const { addToCart } = useCart();
-  const { formatPrice, selectedCurrency, vbucksRate } = useCurrency();
+  const { formatPrice, selectedCurrency, calculateVBucksPrice } = useCurrency();
 
   const scrollToSection = (id: string) => {
     const sanitizedId = id.replace(/\s+/g, '-').toLowerCase();
@@ -222,13 +222,13 @@ export default function TiendaDiaria() {
 
                           <div className="flex items-center justify-between gap-2 sm:gap-3">
                             <div className="text-white font-black text-xs sm:text-base italic">
-                              {selectedCurrency?.symbol || '$'} {formatPrice((parseFloat(String(item.price).replace(/,/g, '')) / 100) * vbucksRate)}
+                              {selectedCurrency?.symbol || '$'} {formatPrice(calculateVBucksPrice(parseFloat(String(item.price).replace(/,/g, ''))))}
                             </div>
                             <button 
                               onClick={() => addToCart && addToCart({
                                 id: item.id,
                                 name: item.name,
-                                price: (parseFloat(String(item.price).replace(/,/g, '')) / 100) * vbucksRate,
+                                price: calculateVBucksPrice(parseFloat(String(item.price).replace(/,/g, ''))),
                                 category: 'fortnite',
                                 image: item.image
                               })}
