@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {/* Logo Flotante (Sobresale de la Navbar) */}
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 py-4">
                     <img 
-                      src="https://i.postimg.cc/SxthTFKb/Whats-App-Image-2026-04-20-at-8-31-10-PM-Photoroom-(1).png" 
+                      src="https://i.postimg.cc/Hxj6J9SC/Whats-App-Image-2026-04-20-at-8-31-10-PM-Photoroom.png" 
                       alt="MonedasJuegos Logo" 
                       className="h-24 sm:h-32 w-auto object-contain drop-shadow-2xl group-hover:scale-110 transition-all duration-300"
                     />
@@ -205,7 +205,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="md:col-span-2">
               <div className="flex items-center gap-4 mb-6">
                 <img 
-                  src="https://i.postimg.cc/SxthTFKb/Whats-App-Image-2026-04-20-at-8-31-10-PM-Photoroom-(1).png" 
+                  src="https://i.postimg.cc/Hxj6J9SC/Whats-App-Image-2026-04-20-at-8-31-10-PM-Photoroom.png" 
                   alt="MonedasJuegos Logo" 
                   className="h-16 w-auto object-contain drop-shadow-lg"
                 />
