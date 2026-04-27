@@ -131,11 +131,11 @@ export default function Home() {
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl sm:text-6xl lg:text-[4.5rem] font-black tracking-tight text-gray-900 dark:text-white leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6"
+              className="text-4xl sm:text-6xl lg:text-[4.5rem] font-black tracking-tight text-gray-900 dark:text-white leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6 uppercase"
             >
-              {settings?.heroTitle?.split(' con ')[0] || 'TU ARSENAL'} <br />
+              {settings?.heroTitle || 'TU ARSENAL'} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-600 to-gold-400 dark:from-gold-400 dark:to-gold-200 mt-1 sm:mt-2 block">
-                {settings?.heroTitle?.split(' con ')[1] ? `CON ${settings.heroTitle.split(' con ')[1]}` : 'LLEVADO AL LÍMITE'}
+                {settings?.heroTitleHighlight || 'LLEVADO AL LÍMITE'}
               </span>
             </motion.h1>
 

@@ -316,9 +316,13 @@ export default function Admin() {
           <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 space-y-4">
             <h3 className="font-black text-xl mb-2 dark:text-white flex items-center gap-2"><Zap className="text-gold-500" /> Sección Hero (Inicio)</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Título Principal</label>
+              <div className="md:col-span-1">
+                <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Título Principal (Línea 1)</label>
                 <input type="text" value={data.settings?.heroTitle || ''} onChange={(e) => setData({...data, settings: { ...data.settings, heroTitle: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gray-900 dark:text-white font-bold focus:ring-2 focus:ring-gold-500" />
+              </div>
+              <div className="md:col-span-1">
+                <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Texto Resaltado (Línea 2)</label>
+                <input type="text" value={data.settings?.heroTitleHighlight || ''} onChange={(e) => setData({...data, settings: { ...data.settings, heroTitleHighlight: e.target.value }})} className="w-full bg-gray-50 dark:bg-gray-900 border-none rounded-xl py-3 px-4 text-gold-500 dark:text-gold-400 font-bold focus:ring-2 focus:ring-gold-500" />
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-bold text-gray-500 mb-1 uppercase tracking-wider">Subtítulo / Descripción</label>
