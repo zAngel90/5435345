@@ -247,63 +247,50 @@ export default function Catalog() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3, delay: (index % 10) * 0.05 }}
-                className="relative bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl rounded-2xl p-2.5 sm:p-3 border border-white/50 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.1)] hover:shadow-xl dark:hover:shadow-gold-500/10 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col overflow-hidden"
+                className="relative bg-[#1A1D24] dark:bg-[#1A1D24] rounded-[2rem] p-4 border border-white/5 shadow-xl hover:-translate-y-1.5 transition-all duration-300 group flex flex-col overflow-hidden"
               >
-                {/* Subtle Hover Gradient Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Image Container */}
-                <div className={`relative w-full aspect-[4/3] rounded-xl overflow-hidden mb-2.5 sm:mb-3 bg-gradient-to-tr ${product.bg || 'from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-950'}`}>
+                {/* Image Container - Square & Dominant */}
+                <div className={`relative w-full aspect-square rounded-2xl overflow-hidden mb-4 bg-gradient-to-br from-blue-500/20 to-indigo-600/30 flex items-center justify-center`}>
+                  <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    className="w-[85%] h-[85%] object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-500 z-10" 
+                  />
+                  {/* Subtle Glow behind image */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   
-                  <div className="absolute inset-0 bg-white/20 dark:bg-black/20 mix-blend-overlay z-10 pointer-events-none" />
-
-                  {product.image.includes('unsplash') ? (
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 mix-blend-luminosity hover:mix-blend-normal relative z-0" />
-                  ) : (
-                    <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3 sm:p-4 drop-shadow-xl group-hover:scale-105 transition-transform duration-500 relative z-0" />
-                  )}
-
                   {product.tag && (
-                    <div className="absolute top-2 left-2 z-20 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-gray-900 dark:text-white px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider shadow-sm border border-gray-200 dark:border-gray-700">
+                    <div className="absolute top-3 left-3 z-20 bg-blue-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider shadow-lg">
                       {product.tag}
                     </div>
                   )}
-                  <div className="absolute top-2 right-2 z-20 bg-gray-900/80 backdrop-blur-md text-gold-400 px-1.5 py-0.5 rounded-full text-[9px] font-black flex items-center gap-1 border border-gold-500/30">
-                    <Star className="w-2.5 h-2.5 fill-gold-400" /> {product.rating}
-                  </div>
                 </div>
 
-                {/* Content */}
-                <div className="flex-grow flex flex-col justify-between px-1 relative z-10">
-                  <div>
-                    <div className="flex items-center gap-1.5 mb-1 sm:mb-1.5">
-                       <div className="w-1 h-1 rounded-full bg-gold-500" />
-                       <p className="text-gold-500 font-bold text-[9px] uppercase tracking-wider opacity-90 truncate">{product.category}</p>
-                    </div>
-                    <h3 className="text-sm sm:text-base font-black text-gray-900 dark:text-white mb-1.5 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-cyan-500 dark:group-hover:from-gold-400 dark:group-hover:to-amber-200 transition-all duration-300" title={product.name}>{product.name}</h3>
-                  </div>
+                {/* Content - Compact & Clean */}
+                <div className="flex flex-col flex-grow relative z-10">
+                  <h3 className="text-lg font-black text-white mb-1 tracking-tight leading-tight line-clamp-1">{product.name}</h3>
+                  <p className="text-[11px] text-gray-400 font-medium line-clamp-2 mb-4 leading-relaxed h-8">
+                    {product.description || `Adquiere ${product.name} al mejor precio con entrega inmediata.`}
+                  </p>
                   
-                  <div className="flex items-end justify-between mt-2">
+                  <div className="flex items-center justify-between mt-auto">
                     <div className="flex flex-col">
-                      <span className="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider mb-0.5">Precio</span>
-                      <div className="flex items-baseline">
-                        <span className="text-xs font-bold text-gray-500 dark:text-gray-400 mr-0.5">{selectedCurrency?.symbol || '$'}</span>
-                        <span className="text-lg sm:text-xl font-black text-gray-900 dark:text-white tracking-tight">{formatPrice(product.price)}</span>
-                      </div>
+                      <span className="text-white font-black text-base sm:text-lg tracking-tight">
+                        {formatPrice(product.price)} <span className="text-[10px] text-gray-500 ml-0.5">{selectedCurrency?.name || 'USD'}</span>
+                      </span>
                     </div>
                     
                     <button 
                       onClick={() => addToCart && addToCart({
                         id: String(product.id),
                         name: product.name,
-                        price: product.price, // Keep base USD price in cart if cart handles its own display
+                        price: product.price,
                         category: product.category.toLowerCase(),
                         image: product.image
                       })}
-                      className="relative overflow-hidden w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg flex items-center justify-center group/btn hover:scale-105 active:scale-95 transition-all duration-200 shadow-md shadow-gray-900/10 dark:shadow-white/10"
+                      className="bg-[#3B82F6] hover:bg-blue-600 text-white text-[11px] font-black uppercase px-4 py-2.5 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-500/20"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-tr from-gold-500 to-amber-300 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                      <ShoppingCart className="w-4 h-4 relative z-10 group-hover/btn:text-gray-900 transition-colors" />
+                      Añadir
                     </button>
                   </div>
                 </div>
