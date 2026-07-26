@@ -124,7 +124,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 )}
                 
                 <a 
-                  href="https://www.instagram.com/monedasjuegos/" 
+                  href="https://www.instagram.com/monedasjuegos_/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm rounded-3xl transition-all"
@@ -230,7 +230,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </p>
             <div className="flex gap-4">
               <a 
-                href="https://www.instagram.com/monedasjuegos/" 
+                href="https://www.instagram.com/monedasjuegos_/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-gold-50 dark:hover:bg-gold-900/20 hover:text-gold-500 transition-all cursor-pointer shadow-sm"
