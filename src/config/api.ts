@@ -1,3 +1,3 @@
-const API_BASE_URL = 'https://eva-cole-filled-lancaster.trycloudflare.com';
+const API_BASE_URL = 'https://singer-amongst-milan-golf.trycloudflare.com';
 export const API_URL = `${API_BASE_URL}/api`;
 export default API_URL;
